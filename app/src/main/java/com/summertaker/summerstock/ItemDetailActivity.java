@@ -18,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
 import com.summertaker.summerstock.common.BaseActivity;
 import com.summertaker.summerstock.common.Config;
-import com.summertaker.summerstock.data.NewsData;
+import com.summertaker.summerstock.data.News;
 import com.summertaker.summerstock.parser.DaumNewsParser;
 import com.summertaker.summerstock.util.OkHttpSingleton;
 import com.summertaker.summerstock.util.Util;
@@ -35,7 +35,7 @@ import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class StockDetailActivity extends BaseActivity {
+public class ItemDetailActivity extends BaseActivity {
 
     private String mCode;
     private String mName;
@@ -52,14 +52,14 @@ public class StockDetailActivity extends BaseActivity {
     private boolean mIsFirstLoading = true;
 
     private ScrollView mScrollView;
-    private ArrayList<NewsData> mNewsDataList;
+    private ArrayList<News> mNewsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.stock_detail_activity);
+        setContentView(R.layout.item_detail_activity);
 
-        mContext = StockDetailActivity.this;
+        mContext = ItemDetailActivity.this;
 
         setBaseStatusBar();
 
@@ -568,10 +568,10 @@ public class StockDetailActivity extends BaseActivity {
     }
 
     private void parseNews(String response) {
-        mNewsDataList = new ArrayList<>();
+        mNewsList = new ArrayList<>();
 
         DaumNewsParser daumNewsParser = new DaumNewsParser();
-        daumNewsParser.parseList(mContext, mName, response, mNewsDataList);
+        daumNewsParser.parseList(mContext, mName, response, mNewsList);
 
         renderNews();
     }
@@ -617,7 +617,7 @@ public class StockDetailActivity extends BaseActivity {
         });
 
         // 다음 금융 - 뉴스 목록
-        StockDetailNewsAdapter adapter = new StockDetailNewsAdapter(mContext, mNewsDataList);
+        ItemDetailNewsAdapter adapter = new ItemDetailNewsAdapter(mContext, mNewsList);
 
         ExpandableHeightListView listView = findViewById(R.id.newsListView);
         listView.setExpanded(true);
@@ -627,10 +627,10 @@ public class StockDetailActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                NewsData newsData = (NewsData) parent.getItemAtPosition(position);
+                News news = (News) parent.getItemAtPosition(position);
 
-                String title = mName; //newsData.getItemNm();
-                String url = newsData.getUrl();
+                String title = mName; //news.getItemNm();
+                String url = news.getUrl();
 
                 //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 Intent intent = new Intent(mContext, WebActivity.class);

@@ -2,6 +2,7 @@ package com.summertaker.summerstock;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +14,24 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.summertaker.summerstock.common.BaseDataAdapter;
 import com.summertaker.summerstock.common.Config;
-import com.summertaker.summerstock.data.StockData;
+import com.summertaker.summerstock.data.Item;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
-public class StockListAdapter extends BaseDataAdapter {
+public class ItemListAdapter extends BaseDataAdapter {
 
     private Context mContext;
     private Resources mResources;
     private LayoutInflater mLayoutInflater;
-    private ArrayList<StockData> mDataList;
+    private ArrayList<Item> mDataList;
 
-    public StockListAdapter(Context context, String fragmentId, ArrayList<StockData> dataList) {
+    public ItemListAdapter(Context context, String fragmentId, ArrayList<Item> dataList) {
         this.mContext = context;
         this.mResources = context.getResources();
         this.mLayoutInflater = LayoutInflater.from(context);
@@ -47,13 +54,13 @@ public class StockListAdapter extends BaseDataAdapter {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final StockListAdapter.ViewHolder holder;
-        final StockData data = mDataList.get(position);
+        final ItemListAdapter.ViewHolder holder;
+        final Item data = mDataList.get(position);
 
         if (convertView == null) {
-            holder = new StockListAdapter.ViewHolder();
+            holder = new ItemListAdapter.ViewHolder();
 
-            convertView = mLayoutInflater.inflate(R.layout.stock_list_row, null);
+            convertView = mLayoutInflater.inflate(R.layout.item_list_row, null);
 
             holder.tvNo = convertView.findViewById(R.id.tvNo);
             //holder.tvCode = convertView.findViewById(R.id.tvCode);
@@ -64,6 +71,7 @@ public class StockListAdapter extends BaseDataAdapter {
             holder.tvPrice = convertView.findViewById(R.id.tvPrice);
             holder.tvAdp = convertView.findViewById(R.id.tvAdp);
             holder.tvAdr = convertView.findViewById(R.id.tvAdr);
+            holder.tvIndt = convertView.findViewById(R.id.tvIndt);
 
             holder.loReturn = convertView.findViewById(R.id.loReturn);
             holder.tvRor = convertView.findViewById(R.id.tvRor);
@@ -76,7 +84,7 @@ public class StockListAdapter extends BaseDataAdapter {
 
             convertView.setTag(holder);
         } else {
-            holder = (StockListAdapter.ViewHolder) convertView.getTag();
+            holder = (ItemListAdapter.ViewHolder) convertView.getTag();
         }
 
         /*
@@ -132,13 +140,13 @@ public class StockListAdapter extends BaseDataAdapter {
         //----------------
         // 등락률
         //----------------
-        if (data.getAdr() == 0.0) {
+        if (data.getAdr() == 0) {
             holder.tvAdr.setVisibility(View.GONE);
         } else {
             holder.tvAdr.setVisibility(View.VISIBLE);
 
             String adr = Config.FLOAT_FORMAT.format(data.getAdr()) + "%";
-            if (data.getAdr() > 0.0) {
+            if (data.getAdr() > 0) {
                 adr = "+" + adr;
                 holder.tvAdr.setTextColor(Config.COLOR_PRICE_RISE);
             } else {
@@ -151,13 +159,8 @@ public class StockListAdapter extends BaseDataAdapter {
 
         // 전일비
         if (data.getAdp() == 0) {
-            //holder.tvAdpHd.setVisibility(View.GONE);
             holder.tvAdp.setVisibility(View.GONE);
         } else {
-            //----------------
-            // 전일비
-            //----------------
-            //holder.tvAdpHd.setVisibility(View.VISIBLE);
             holder.tvAdp.setVisibility(View.VISIBLE);
 
             String adp = Config.NUMBER_FORMAT.format(data.getAdp());
@@ -170,6 +173,19 @@ public class StockListAdapter extends BaseDataAdapter {
             }
             adp = "(" + adp + ")";
             holder.tvAdp.setText(adp);
+        }
+
+        // 추천일
+        if (data.getIndt() == null || data.getIndt().isEmpty()) {
+            holder.tvIndt.setVisibility(View.GONE);
+        } else {
+            holder.tvIndt.setVisibility(View.VISIBLE);
+
+            String indt = mResources.getString(R.string.date_of_recommendation) + " " + data.getIndt();
+            if (data.getNdr() > 0) {
+                indt = indt + " (" + data.getNdr() + "일 전" + ")";
+            }
+            holder.tvIndt.setText(indt);
         }
 
         // 추천일 후 누적 수익률
@@ -186,8 +202,14 @@ public class StockListAdapter extends BaseDataAdapter {
             }
             holder.tvRor.setText(ror);
 
-            String ndr = "(" + data.getNdr() + "일 경과)";
-            holder.tvNdr.setText(ndr);
+            // 경과일
+            if (data.getNdr() == 0) {
+                holder.tvNdr.setVisibility(View.GONE);
+            } else {
+                holder.tvNdr.setVisibility(View.VISIBLE);
+                String ndr = "(" + data.getNdr() + "일 경과)";
+                holder.tvNdr.setText(ndr);
+            }
         }
 
         /*
@@ -319,6 +341,7 @@ public class StockListAdapter extends BaseDataAdapter {
         TextView tvPrice;
         TextView tvAdp;
         TextView tvAdr;
+        TextView tvIndt;
 
         LinearLayout loReturn;
         TextView tvRor;

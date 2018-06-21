@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import java.util.Comparator;
 import java.util.Date;
 
-public class NewsData implements Comparable<NewsData> {
+public class News implements Comparable<News> {
     private String itemCd;
     private String itemNm;
     private String title;
@@ -16,13 +16,13 @@ public class NewsData implements Comparable<NewsData> {
     private long elapsed;
 
     @Override
-    public int compareTo(@NonNull NewsData o) {
+    public int compareTo(@NonNull News o) {
         return 0;
     }
 
-    public static Comparator<NewsData> compareToPublished = new Comparator<NewsData>() {
+    public static Comparator<News> compareToPublished = new Comparator<News>() {
 
-        public int compare(NewsData d1, NewsData d2) {
+        public int compare(News d1, News d2) {
 
             Date v1 = d1.getPublished();
             Date v2 = d2.getPublished();

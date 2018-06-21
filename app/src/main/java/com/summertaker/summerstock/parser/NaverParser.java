@@ -2,7 +2,7 @@ package com.summertaker.summerstock.parser;
 
 import com.summertaker.summerstock.common.BaseParser;
 import com.summertaker.summerstock.common.Config;
-import com.summertaker.summerstock.data.StockData;
+import com.summertaker.summerstock.data.Item;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class NaverParser extends BaseParser {
 
-    public void parseRise(String response, ArrayList<StockData> dataList) {
+    public void parseRise(String response, ArrayList<Item> dataList) {
         if (response == null || response.isEmpty()) {
             return;
         }
@@ -57,9 +57,9 @@ public class NaverParser extends BaseParser {
                 temp = tds.get(2).text();
                 temp = temp.replace(",", "");
                 price = Integer.parseInt(temp);
-                //if (price < Config.PRICE_MIN) {
-                //    continue;
-                //}
+                if (price < Config.PRICE_MIN || price > Config.PRICE_MAX) {
+                    continue;
+                }
 
                 temp = tds.get(3).text();
                 temp = temp.replace(",", "");
@@ -96,7 +96,7 @@ public class NaverParser extends BaseParser {
 
                 //Log.e(mTag, "itemCd: " + code + ", " + name + ", " + price + ", " + adp + ", " + adr + ", " + volume + ", " + per + ", " + roe);
 
-                StockData data = new StockData();
+                Item data = new Item();
                 data.setNo(no);
                 data.setCode(code);
                 data.setName(name);

@@ -3,7 +3,7 @@ package com.summertaker.summerstock.parser;
 import android.content.Context;
 
 import com.summertaker.summerstock.common.BaseParser;
-import com.summertaker.summerstock.data.NewsData;
+import com.summertaker.summerstock.data.News;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DaumNewsParser extends BaseParser {
 
-    public void parseList(Context context, String itemNm, String response, ArrayList<NewsData> dataList) {
+    public void parseList(Context context, String itemNm, String response, ArrayList<News> dataList) {
         if (response == null || response.isEmpty()) {
             return;
         }
@@ -100,15 +100,15 @@ public class DaumNewsParser extends BaseParser {
 
             //Log.e(mTag, title + " " + published + " " + url);
 
-            NewsData newsData = new NewsData();
-            newsData.setTitle(title);
-            newsData.setUrl(url);
-            newsData.setSummary(summary);
-            newsData.setPublished(published);
-            newsData.setPublishedText(publishedText);
-            newsData.setElapsed(elapsed);
+            News news = new News();
+            news.setTitle(title);
+            news.setUrl(url);
+            news.setSummary(summary);
+            news.setPublished(published);
+            news.setPublishedText(publishedText);
+            news.setElapsed(elapsed);
 
-            dataList.add(newsData);
+            dataList.add(news);
         }
     }
 }

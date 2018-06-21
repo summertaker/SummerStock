@@ -89,7 +89,6 @@
             android:id="@+id/tvPriceTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/value_spacing"
             android:singleLine="true"
             android:text="@string/current_price"
             android:textColor="@color/light_black"
@@ -99,7 +98,7 @@
             android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/value_spacing"
+            android:layout_marginStart="@dimen/value_spacing"
             android:singleLine="true"
             android:text="@null"
             android:textColor="@color/current_price"
@@ -110,6 +109,7 @@
             android:id="@+id/tvAdr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/value_spacing"
             android:singleLine="true"
             android:text="@null"
             android:textStyle="bold" />
@@ -123,6 +123,14 @@
             android:text="@null"
             android:textColor="@color/black"
             android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvIndt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/value_spacing"
+            android:singleLine="true"
+            android:text="@null" />
 
     </LinearLayout>
 

@@ -1,11 +1,11 @@
 package com.summertaker.summerstock.data;
 
-public class SiteData {
+public class Site {
     private String id;
     private String title;
     private String url;
 
-    public SiteData(String id, String title, String url) {
+    public Site(String id, String title, String url) {
         this.id = id;
         this.title = title;
         this.url = url;

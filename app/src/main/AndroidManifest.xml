@@ -27,7 +27,7 @@
         </activity>
 
         <activity
-            android:name=".StockDetailActivity"
+            android:name=".ItemDetailActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

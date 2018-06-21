@@ -8,17 +8,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.summertaker.summerstock.common.BaseDataAdapter;
-import com.summertaker.summerstock.data.NewsData;
+import com.summertaker.summerstock.data.News;
 
 import java.util.ArrayList;
 
-public class StockDetailNewsAdapter extends BaseDataAdapter {
+public class ItemDetailNewsAdapter extends BaseDataAdapter {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private ArrayList<NewsData> mDataList = null;
+    private ArrayList<News> mDataList = null;
 
-    public StockDetailNewsAdapter(Context context, ArrayList<NewsData> dataList) {
+    public ItemDetailNewsAdapter(Context context, ArrayList<News> dataList) {
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mDataList = dataList;
@@ -40,13 +40,13 @@ public class StockDetailNewsAdapter extends BaseDataAdapter {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final StockDetailNewsAdapter.ViewHolder holder;
-        final NewsData data = mDataList.get(position);
+        final ItemDetailNewsAdapter.ViewHolder holder;
+        final News data = mDataList.get(position);
 
         if (convertView == null) {
-            holder = new StockDetailNewsAdapter.ViewHolder();
+            holder = new ItemDetailNewsAdapter.ViewHolder();
 
-            convertView = mLayoutInflater.inflate(R.layout.stock_detail_news_row, null);
+            convertView = mLayoutInflater.inflate(R.layout.item_detail_news_row, null);
 
             holder.tvTitle = convertView.findViewById(R.id.tvTitle);
             holder.tvElapsed = convertView.findViewById(R.id.tvElapsed);
@@ -55,7 +55,7 @@ public class StockDetailNewsAdapter extends BaseDataAdapter {
 
             convertView.setTag(holder);
         } else {
-            holder = (StockDetailNewsAdapter.ViewHolder) convertView.getTag();
+            holder = (ItemDetailNewsAdapter.ViewHolder) convertView.getTag();
         }
 
         String title = data.getTitle();

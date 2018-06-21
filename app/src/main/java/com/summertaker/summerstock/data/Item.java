@@ -1,11 +1,12 @@
 package com.summertaker.summerstock.data;
 
-public class StockData {
+public class Item {
     private int no;
     private String code;
     private String name;
     private int price;
     private int psp; // prediction stock price
+    private String indt;
     private int adp;
     private float adr;
     private int volume;
@@ -48,6 +49,14 @@ public class StockData {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getIndt() {
+        return indt;
+    }
+
+    public void setIndt(String indt) {
+        this.indt = indt;
     }
 
     public int getPsp() {

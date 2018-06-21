@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 
 import com.summertaker.summerstock.common.BaseFragment;
 import com.summertaker.summerstock.common.Config;
-import com.summertaker.summerstock.data.StockData;
+import com.summertaker.summerstock.data.Item;
 import com.summertaker.summerstock.parser.NaverParser;
 import com.summertaker.summerstock.util.OkHttpSingleton;
 import com.summertaker.summerstock.util.Util;
@@ -25,7 +25,13 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,9 +39,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class StockListFragment extends BaseFragment {
+public class ItemListFragment extends BaseFragment {
 
-    private StockListFragment.ItemListListener mListener;
+    private ItemListFragment.ItemListListener mListener;
 
     //private int mPosition = -1;
     private String mFragmentId = "";
@@ -45,8 +51,8 @@ public class StockListFragment extends BaseFragment {
     private ProgressBar mPbLoading;
 
     private boolean mIsLoading = false;
-    private ArrayList<StockData> mDataList;
-    private StockListAdapter mAdapter;
+    private ArrayList<Item> mDataList;
+    private ItemListAdapter mAdapter;
     private ListView mListView;
 
     // Container Activity must implement this interface
@@ -64,18 +70,18 @@ public class StockListFragment extends BaseFragment {
             // This makes sure that the container activity has implemented
             // the callback interface. If not, it throws an exception
             try {
-                mListener = (StockListFragment.ItemListListener) activity;
+                mListener = (ItemListFragment.ItemListListener) activity;
             } catch (ClassCastException e) {
                 throw new ClassCastException(activity.toString() + " must implement OnHeadlineSelectedListener");
             }
         }
     }
 
-    public StockListFragment() {
+    public ItemListFragment() {
     }
 
-    public static StockListFragment newInstance(int position, String fragmentId, String url) {
-        StockListFragment fragment = new StockListFragment();
+    public static ItemListFragment newInstance(int position, String fragmentId, String url) {
+        ItemListFragment fragment = new ItemListFragment();
         Bundle args = new Bundle();
         args.putInt("position", position);
         args.putString("fragmentId", fragmentId);
@@ -87,7 +93,7 @@ public class StockListFragment extends BaseFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.stock_list_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.item_list_fragment, container, false);
 
         //mLoLoading = rootView.findViewById(R.id.loLoading);
         //mPbLoading = rootView.findViewById(R.id.pbLoading);
@@ -97,12 +103,13 @@ public class StockListFragment extends BaseFragment {
 
         //mPosition = getArguments().getInt("position", -1);
         mFragmentId = getArguments().getString("fragmentId");
+        //Log.e(mTag, "mFragmentId: " + mFragmentId);
         mUrl = getArguments().getString("url");
 
         mPbLoading = rootView.findViewById(R.id.pbLoading);
 
         mDataList = new ArrayList<>();
-        mAdapter = new StockListAdapter(mContext, mFragmentId, mDataList);
+        mAdapter = new ItemListAdapter(mContext, mFragmentId, mDataList);
 
         mListView = rootView.findViewById(R.id.listView);
         mListView.setAdapter(mAdapter);
@@ -110,9 +117,9 @@ public class StockListFragment extends BaseFragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                StockData data = (StockData) adapterView.getItemAtPosition(position);
+                Item data = (Item) adapterView.getItemAtPosition(position);
 
-                Intent intent = new Intent(mContext, StockDetailActivity.class);
+                Intent intent = new Intent(mContext, ItemDetailActivity.class);
                 intent.putExtra("code", data.getCode());
                 intent.putExtra("name", data.getName());
                 intent.putExtra("price", data.getPrice());
@@ -125,7 +132,7 @@ public class StockListFragment extends BaseFragment {
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-                StockData data = (StockData) adapterView.getItemAtPosition(position);
+                Item data = (Item) adapterView.getItemAtPosition(position);
                 updateFavorite(position, data.getCode()); // 즐겨찾기 설정
 
                 return true;
@@ -320,6 +327,13 @@ public class StockListFragment extends BaseFragment {
                 ANL_DT	2018/06/21
                 IN_DIFF_REASON	null
                  */
+                DateFormat inDf = new SimpleDateFormat("yy/MM/dd", Locale.getDefault());
+                DateFormat outDf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                Calendar cal = Calendar.getInstance();
+                Date d = cal.getTime();
+                long curTime = d.getTime();
+
                 int num = 1;
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
@@ -333,58 +347,77 @@ public class StockListFragment extends BaseFragment {
                     if (psp == 0) {
                         psp = Util.getInt(object, "PRE_ADJ_CLOSE_PRC"); // 현재 추천 > 예상가
                     }
+
+                    String indt = Util.getString(object, "IN_DT"); // 현재 추천 > 추천일
+                    int days = 0;
+                    if (indt.isEmpty()) {
+                        indt = Util.getString(object, "LAST_IN_DT"); // 추천수 > 최근 추천일
+                    }
+                    try {
+                        Date date = inDf.parse(indt);
+                        indt = outDf.format(date);
+                        long oldTime = date.getTime();
+                        long diffTime = curTime - oldTime;
+                        days = (int) ((((diffTime / 1000) / 60) / 60) / 24); // 경과일
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
                     int adp = Util.getInt(object, "adp");
                     float adr = BigDecimal.valueOf(Util.getDouble(object, "adr")).floatValue();
                     float per = BigDecimal.valueOf(Util.getDouble(object, "per")).floatValue();
                     float roe = BigDecimal.valueOf(Util.getDouble(object, "roe")).floatValue();
-                    int ndr = Util.getInt(object, "CNT");
+                    int ndr = Util.getInt(object, "CNT"); // 경과일
                     float ror = BigDecimal.valueOf(Util.getDouble(object, "ACCU_RTN")).floatValue();
                     int nor = Util.getInt(object, "RECOMAND_CNT");
                     //String inReason = Util.getString(object, "in_reason");
                     //String favorite = Util.getString(object, "favorite");
                     //String possession = Util.getString(object, "possession");
 
-                    if (mFragmentId.equals(Config.KEY_RISING_STOCK) && price > 0) { // 주가
-                        if (price < Config.PRICE_MIN || price > Config.PRICE_MAX) {
-                            continue;
-                        }
-                    } else if (mFragmentId.equals(Config.KEY_RATE_OF_RETURN) && ror > 0.0) { // 수익률
-                        if (ror < Config.ROR_MIN) {
-                            continue;
-                        }
-                    } else if (mFragmentId.equals(Config.KEY_RECOMMENDATION)) { // 현재 추천
-                        if (psp < Config.PRICE_MIN || psp > Config.PRICE_MAX) { // 예측가
-                            continue;
-                        }
-                        if (no > 60) { // 추천일 오래 된 주식은 제외
-                            break;
-                        }
-                    } else {
-                        if (psp < Config.PRICE_MIN || psp > Config.PRICE_MAX) { // 예측가
-                            continue;
+                    if (ndr == 0) { // 추천 경과일
+                        if (days > 0) {
+                            ndr = days;
                         }
                     }
 
-                    Log.e(mTag, no + ": " + name + " " + ror);
+                    if (mFragmentId.equals(Config.KEY_RATE_OF_RETURN)) { // 추천주 수익률
+                        if (ror < Config.ROR_MIN) {
+                            continue;
+                        }
+                    } else if (mFragmentId.equals(Config.KEY_TOP_RECOMMENDATION)) { // 추천수 상위
+                        if (psp < Config.PRICE_MIN || psp > Config.PRICE_MAX) {
+                            continue;
+                        }
+                    } else if (mFragmentId.equals(Config.KEY_RECOMMENDATION)) { // 현재 추천
+                        if (psp < Config.PRICE_MIN || psp > Config.PRICE_MAX) {
+                            continue;
+                        }
+                        if (ndr > 30) { // 추천일 오래 된 주식은 제외: 30일
+                            break;
+                        }
+                    }
 
-                    StockData data = new StockData();
-                    data.setNo(num);
-                    data.setCode(code);
-                    data.setName(name);
-                    data.setPrice(price);
-                    data.setPsp(psp);
-                    data.setAdp(adp);
-                    data.setAdr(adr);
-                    data.setPer(per);
-                    data.setRoe(roe);
-                    data.setNdr(ndr);
-                    data.setRor(ror);
-                    data.setNor(nor);
+                    //Log.e(mTag, no + ". " + name + " " + ror);
+
+                    Item item = new Item();
+                    item.setNo(num);
+                    item.setCode(code);
+                    item.setName(name);
+                    item.setPrice(price);
+                    item.setPsp(psp);
+                    item.setIndt(indt);
+                    item.setAdp(adp);
+                    item.setAdr(adr);
+                    item.setPer(per);
+                    item.setRoe(roe);
+                    item.setNdr(ndr);
+                    item.setRor(ror);
+                    item.setNor(nor);
 
                     //data.setFavorite(favorite);
                     //data.setPossession(possession);
 
-                    mDataList.add(data);
+                    mDataList.add(item);
                     num++;
                 }
             } catch (JSONException e) {

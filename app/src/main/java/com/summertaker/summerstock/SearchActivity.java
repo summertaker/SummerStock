@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 
 import com.summertaker.summerstock.common.BaseActivity;
 import com.summertaker.summerstock.common.Config;
-import com.summertaker.summerstock.data.StockData;
+import com.summertaker.summerstock.data.Item;
 import com.summertaker.summerstock.util.Util;
 
 import org.json.JSONArray;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class SearchActivity extends BaseActivity {
 
-    private ArrayList<StockData> mStockDataList;
+    private ArrayList<Item> mItemList;
 
     ProgressBar mPbLoading;
     LinearLayout mLoMain;
@@ -41,7 +41,7 @@ public class SearchActivity extends BaseActivity {
         setBaseStatusBar();
         initToolbar(null);
 
-        mStockDataList = new ArrayList<>();
+        mItemList = new ArrayList<>();
 
         mPbLoading = findViewById(R.id.pbLoading);
         mLoMain = findViewById(R.id.loMain);
@@ -98,13 +98,13 @@ public class SearchActivity extends BaseActivity {
                 //int prc = Integer.valueOf(Util.getString(object, "prc"));
                 //float adr = BigDecimal.valueOf(Util.getDouble(object, "adr")).floatValue();
 
-                StockData data = new StockData();
+                Item data = new Item();
                 data.setCode(itemCd);
                 data.setName(itemNm);
                 //data.setPrc(prc);
                 //data.setAdr(adr);
 
-                mStockDataList.add(data);
+                mItemList.add(data);
             }
         } catch (JSONException e) {
             Log.e(mTag, e.getMessage());
@@ -118,9 +118,9 @@ public class SearchActivity extends BaseActivity {
         mLoMain.setVisibility(View.VISIBLE);
         //mTvAucoComplete.setVisibility(View.VISIBLE);
 
-        String[] searchData = new String[mStockDataList.size()];
-        for (int i = 0; i < mStockDataList.size(); i++) {
-            searchData[i] = mStockDataList.get(i).getName();
+        String[] searchData = new String[mItemList.size()];
+        for (int i = 0; i < mItemList.size(); i++) {
+            searchData[i] = mItemList.get(i).getName();
         }
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -134,14 +134,14 @@ public class SearchActivity extends BaseActivity {
                 String itemNm = parent.getItemAtPosition(position).toString();
                 String itemCd = "";
 
-                for (StockData stockData : mStockDataList) {
-                    if (itemNm.equals(stockData.getName())) {
-                        itemCd = stockData.getCode();
+                for (Item item : mItemList) {
+                    if (itemNm.equals(item.getName())) {
+                        itemCd = item.getCode();
                         break;
                     }
                 }
 
-                Intent intent = new Intent(mContext, StockDetailActivity.class);
+                Intent intent = new Intent(mContext, ItemDetailActivity.class);
                 intent.putExtra("itemCd", itemCd);
                 startActivity(intent);
             }

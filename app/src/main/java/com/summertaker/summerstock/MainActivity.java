@@ -21,7 +21,7 @@ import android.view.animation.AnimationUtils;
 
 import com.summertaker.summerstock.common.BaseApplication;
 import com.summertaker.summerstock.common.BaseFragment;
-import com.summertaker.summerstock.data.SiteData;
+import com.summertaker.summerstock.data.Site;
 import com.summertaker.summerstock.util.OkHttpSingleton;
 import com.summertaker.summerstock.util.SlidingTabLayout;
 
@@ -35,7 +35,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
-        StockListFragment.ItemListListener {
+        ItemListFragment.ItemListListener {
 
     private String mTag = this.getClass().getSimpleName();
     private Toolbar mToolbar;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements
     private View mMenuRefresh;
     private Animation mRotateAnimation;
 
-    private ArrayList<SiteData> mPagers;
+    private ArrayList<Site> mPagerItems;
     private SectionsPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
 
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mPagers = BaseApplication.getInstance().getPagers();
+        mPagerItems = BaseApplication.getInstance().getPagerItems();
 
         mPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = findViewById(R.id.viewpager);
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements
         // 뷰페이저 간 이동 시 프레그먼트 자동으로 새로고침 방지
         // https://stackoverflow.com/questions/28494637/android-how-to-stop-refreshing-fragments-on-tab-change
         //-------------------------------------------------------------------------------------------------------
-        mViewPager.setOffscreenPageLimit(mPagers.size());
+        mViewPager.setOffscreenPageLimit(mPagerItems.size());
 
         SlidingTabLayout slidingTabLayout = findViewById(R.id.slidingTabs);
         slidingTabLayout.setViewPager(mViewPager);
@@ -206,18 +206,18 @@ public class MainActivity extends AppCompatActivity implements
 
         @Override
         public Fragment getItem(int position) {
-            SiteData siteData = mPagers.get(position);
-            return StockListFragment.newInstance(position, siteData.getId(), siteData.getUrl());
+            Site site = mPagerItems.get(position);
+            return ItemListFragment.newInstance(position, site.getId(), site.getUrl());
         }
 
         @Override
         public int getCount() {
-            return mPagers.size();
+            return mPagerItems.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mPagers.get(position).getTitle();
+            return mPagerItems.get(position).getTitle();
         }
     }
 
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements
         // https://stackoverflow.com/questions/34861257/how-can-i-set-a-tag-for-viewpager-fragments
         //--------------------------------------------------------------------------------------------
         int currentItem = mViewPager.getCurrentItem();
-        //SiteData siteData = BaseApplication.getInstance().getPagers().get(currentItem);
+        //Site siteData = BaseApplication.getInstance().getPagers().get(currentItem);
 
         Fragment f = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + currentItem);
 
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements
                 super.onBackPressed();
             }
         } else {
-            BaseFragment fragment = (StockListFragment) f;
+            BaseFragment fragment = (ItemListFragment) f;
 
             switch (command) {
                 case "goTop":

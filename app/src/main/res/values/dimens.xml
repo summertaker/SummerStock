@@ -1,0 +1,71 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_margin">12dp</dimen>
+    <dimen name="activity_padding">10dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Text -->
+    <dimen name="title">18sp</dimen>
+    <dimen name="subtitle">16sp</dimen>
+    <dimen name="text_size">16sp</dimen>
+
+    <dimen name="section_spacing">15dp</dimen>
+    <dimen name="line_spacing">5dp</dimen>
+    <dimen name="hr_spacing">7dp</dimen>
+
+    <dimen name="field_hspacing">7dp</dimen>
+    <dimen name="field_vspacing">3dp</dimen>
+    <dimen name="value_spacing">3dp</dimen>
+
+    <!-- 폼 -->
+    <dimen name="form_control_drawable_padding">10dp</dimen>
+    <dimen name="form_control_text_size">15sp</dimen>
+    <dimen name="form_control_margin">15dp</dimen>
+    <dimen name="button_padding">10dp</dimen>
+    <dimen name="button_padding_top">10dp</dimen>
+    <dimen name="button_padding_bottom">10dp</dimen>
+    <dimen name="button_padding_left">20dp</dimen>
+    <dimen name="button_padding_right">20dp</dimen>
+
+    <!-- 스몰 버튼 -->
+    <dimen name="form_control_text_size_small">13sp</dimen>
+    <dimen name="button_height_small">36dp</dimen>
+    <dimen name="button_padding_small">0dp</dimen>
+    <dimen name="button_padding_top_small">10dp</dimen>
+    <dimen name="button_padding_bottom_small">10dp</dimen>
+    <dimen name="button_padding_left_small">20dp</dimen>
+    <dimen name="button_padding_right_small">20dp</dimen>
+
+    <!-- 미니 버튼 -->
+    <dimen name="form_control_text_size_mini">12sp</dimen>
+    <dimen name="button_height_mini">26dp</dimen>
+    <dimen name="button_padding_mini">5dp</dimen>
+    <dimen name="button_padding_top_mini">7dp</dimen>
+    <dimen name="button_padding_bottom_mini">7dp</dimen>
+    <dimen name="button_padding_left_mini">10dp</dimen>
+    <dimen name="button_padding_right_mini">10dp</dimen>
+
+    <!-- Label -->
+    <dimen name="label_radius">3dp</dimen>
+
+    <!-- Card -->
+    <dimen name="card_corner_radius">5dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="card_item_padding">10dp</dimen>
+
+    <dimen name="graph_card_corner_radius">2dp</dimen>
+    <dimen name="graph_card_elevation">2dp</dimen>
+    <dimen name="graph_card_item_padding">10dp</dimen>
+
+    <!-- ListView -->
+    <dimen name="listview_vertical_margin">9dp</dimen>
+
+    <!-- Chart -->
+    <dimen name="naver_chart_height">220dp</dimen>
+    <dimen name="daum_chart_height">200dp</dimen>
+
+</resources>

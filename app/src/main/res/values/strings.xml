@@ -1,0 +1,108 @@
+<resources>
+    <string name="access_denied">접근이 거부되었습니다.</string>
+    <string name="action_finish">종료</string>
+    <string name="action_refresh">새로 고침</string>
+    <string name="action_recommend">추천</string>
+    <string name="action_search">검색</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_to_favorite">관심 종목에 추가</string>
+    <string name="add_to_possession">보유 종목에 추가</string>
+    <string name="adr_to_january">연초대비</string>
+    <string name="advanced_decline_price">전일비</string>
+    <string name="advanced_decline_rate">등락률</string>
+    <string name="after_recommend_date">추천일 후</string>
+    <string name="app_name">써머스탁</string>
+    <string name="app_will_be_quit">앱이 종료됩니다.</string>
+
+    <string name="current_price">현재가</string>
+
+    <string name="daily_pipe">일봉</string>
+    <string name="daum_finance">다음 금융</string>
+    <string name="daum_news">다음 뉴스</string>
+    <string name="daum_search">다음 검색</string>
+
+    <string name="error">에러</string>
+
+    <string name="favorite_item">관심 종목</string>
+    <string name="favorite_off">☆</string>
+    <string name="favorite_on">★</string>
+    <string name="finish">종료</string>
+    <string name="first_recommend_date">최초 추천일</string>
+    <string name="five_years">5년</string>
+
+    <string name="google_news">구글 뉴스</string>
+    <string name="google_search">구글 검색</string>
+
+    <string name="input_item_name">종목 이름을 입력하세요.</string>
+    <string name="item_name">종목 이름</string>
+
+    <string name="last_recommend_date">최근 추천일</string>
+    <string name="loading">로드 중&#8230;</string>
+
+    <string name="modified_price">수정가</string>
+    <string name="monthly_pipe">월봉</string>
+
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="naver_finance">네이버 금융</string>
+    <string name="naver_news">네이버 뉴스</string>
+    <string name="naver_search">네이버 검색</string>
+    <string name="network_error">네트웍 에러</string>
+    <string name="news">뉴스</string>
+
+    <string name="ok">확인</string>
+    <string name="one_day">1일</string>
+    <string name="one_month">1개월</string>
+    <string name="one_week">1주일</string>
+    <string name="one_year">1년</string>
+    <string name="open_in_new">새 창에서 열기</string>
+
+    <string name="per">PER</string>
+    <string name="possession">보유</string>
+    <string name="possession_item">보유 종목</string>
+
+    <string name="rate_of_return">수익률</string>
+    <string name="recommend">추천</string>
+    <string name="recommend_date">추천일</string>
+    <string name="recommend_price">추천가</string>
+    <string name="recommend_count">추천수</string>
+    <string name="recommend_reason">추천 이유</string>
+    <string name="remove_from_favorite">관심 종목에서 제거</string>
+    <string name="remove_from_possession">보유 종목에서 제거</string>
+    <string name="roe">ROE</string>
+
+    <string name="site_link">사이트 링크 :</string>
+
+    <string name="predict_price">예상가</string>
+    <string name="ten_years">10년</string>
+    <string name="three_months">3개월</string>
+    <string name="three_years">3년</string>
+    <string name="today">오늘</string>
+    <string name="trading_volume">거래량</string>
+
+    <string name="weekly_pipe">주봉</string>
+
+    <string name="main_list_item_news_title">뉴스</string>
+    <string name="main_list_item_news_subtitle">보유, 관심</string>
+    <string name="main_list_item_my_title">마이</string>
+    <string name="main_list_item_my_subtitle">보유, 관심</string>
+    <string name="main_list_item_reco_title">추천</string>
+    <string name="main_list_item_reco_subtitle">수익률, 추천수, 현재 추천</string>
+
+    <string name="title_activity_web">웹</string>
+    <string name="title_activity_item">종목</string>
+    <string name="title_activity_search">검색</string>
+    <string name="title_activity_favorite">즐겨찾기</string>
+    <string name="title_activity_reco">추천</string>
+    <string name="title_activity_news">NewsActivity</string>
+    <string name="title_activity_favorite_list">FavoriteListActivity</string>
+    <string name="title_activity_item_rise">ItemRiseActivity</string>
+    <string name="title_activity_reco_current">RecoCurrentActivity</string>
+    <string name="title_activity_reco_top">RecoTopActivity</string>
+    <string name="title_activity_reco_return_list">RecoReturnListActivity</string>
+    <string name="title_activity_my">MyActivity</string>
+    <string name="title_activity_item_list">ItemListActivity</string>
+</resources>

@@ -2,7 +2,7 @@ package com.summertaker.summerstock.parser;
 
 import com.summertaker.summerstock.common.BaseParser;
 import com.summertaker.summerstock.common.Config;
-import com.summertaker.summerstock.data.ItemData;
+import com.summertaker.summerstock.data.StockData;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class NaverParser extends BaseParser {
 
-    public void parseRise(String response, ArrayList<ItemData> dataList) {
+    public void parseRise(String response, ArrayList<StockData> dataList) {
         if (response == null || response.isEmpty()) {
             return;
         }
@@ -57,21 +57,24 @@ public class NaverParser extends BaseParser {
                 temp = tds.get(2).text();
                 temp = temp.replace(",", "");
                 price = Integer.parseInt(temp);
-                if (price < Config.PRICE_MIN) {
-                    continue;
-                }
+                //if (price < Config.PRICE_MIN) {
+                //    continue;
+                //}
 
                 temp = tds.get(3).text();
                 temp = temp.replace(",", "");
                 adp = Integer.valueOf(temp);
+                if (adp < Config.ADP_MIN) {
+                    continue;
+                }
 
                 temp = tds.get(4).text();
                 temp = temp.replace(",", "");
                 temp = temp.replace("%", "");
                 adr = Float.valueOf(temp);
-                if (adr < Config.ADR_MIN) {
-                    continue;
-                }
+                //if (adr < Config.ADR_MIN) {
+                //    continue;
+                //}
 
                 temp = tds.get(5).text();
                 temp = temp.replace(",", "");
@@ -93,7 +96,7 @@ public class NaverParser extends BaseParser {
 
                 //Log.e(mTag, "itemCd: " + code + ", " + name + ", " + price + ", " + adp + ", " + adr + ", " + volume + ", " + per + ", " + roe);
 
-                ItemData data = new ItemData();
+                StockData data = new StockData();
                 data.setNo(no);
                 data.setCode(code);
                 data.setName(name);

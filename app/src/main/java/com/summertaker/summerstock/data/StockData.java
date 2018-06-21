@@ -1,17 +1,19 @@
 package com.summertaker.summerstock.data;
 
-public class ItemData {
+public class StockData {
     private int no;
     private String code;
     private String name;
     private int price;
-    private int predict;
+    private int psp; // prediction stock price
     private int adp;
     private float adr;
     private int volume;
     private float per;
     private float roe;
-    private int recommend;
+    private int ndr; // Number of days after Recommendation
+    private float ror; // Rate of Return
+    private int nor; // Number of Recommendations
 
     private String favorite;
     private String possession;
@@ -46,6 +48,14 @@ public class ItemData {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getPsp() {
+        return psp;
+    }
+
+    public void setPsp(int psp) {
+        this.psp = psp;
     }
 
     public int getAdp() {
@@ -88,12 +98,28 @@ public class ItemData {
         this.roe = roe;
     }
 
-    public int getRecommend() {
-        return recommend;
+    public int getNdr() {
+        return ndr;
     }
 
-    public void setRecommend(int recommend) {
-        this.recommend = recommend;
+    public void setNdr(int ndr) {
+        this.ndr = ndr;
+    }
+
+    public float getRor() {
+        return ror;
+    }
+
+    public void setRor(float ror) {
+        this.ror = ror;
+    }
+
+    public int getNor() {
+        return nor;
+    }
+
+    public void setNor(int nor) {
+        this.nor = nor;
     }
 
     public String getFavorite() {
@@ -110,13 +136,5 @@ public class ItemData {
 
     public void setPossession(String possession) {
         this.possession = possession;
-    }
-
-    public int getPredict() {
-        return predict;
-    }
-
-    public void setPredict(int predict) {
-        this.predict = predict;
     }
 }

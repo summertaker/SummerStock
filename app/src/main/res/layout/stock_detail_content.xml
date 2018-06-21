@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ItemDetailActivity"
-    tools:showIn="@layout/item_detail_activity">
+    tools:context=".StockDetailActivity"
+    tools:showIn="@layout/stock_detail_activity">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -263,7 +263,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/section_spacing"
-                    android:text="@string/recommend_reason"
+                    android:text="@string/reason_of_recommendation"
                     android:textColor="@color/black"
                     android:textSize="@dimen/subtitle"
                     android:textStyle="bold" />

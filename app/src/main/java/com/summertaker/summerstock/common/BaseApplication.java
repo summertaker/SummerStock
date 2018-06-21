@@ -22,10 +22,10 @@ public class BaseApplication extends Application {
         mPagers = new ArrayList<>();
         //mPagers.add(new SiteData(Config.KEY_POSSESSION, "보유주", Config.URL_ITEM_LIST + "?category=" + Config.KEY_POSSESSION));
         //mPagers.add(new SiteData(Config.KEY_FAVORITE, "주시주", Config.URL_ITEM_LIST + "?category=" + Config.KEY_FAVORITE));
-        mPagers.add(new SiteData("", "상승 종목", "http://finance.naver.com/sise/sise_rise.nhn"));
-        //mPagers.add(new SiteData("", "수익률", Config.URL_ITEM_LIST + "?category=return"));
-        mPagers.add(new SiteData("", "추천 상위", "http://recommend.finance.naver.com/Home/GetTopCompanyList"));
-        mPagers.add(new SiteData("", "현재 추천", "http://recommend.finance.naver.com/Home/RecommendDetail"));
+        mPagers.add(new SiteData(Config.KEY_RISING_STOCK, "상승 종목", "http://finance.naver.com/sise/sise_rise.nhn"));
+        mPagers.add(new SiteData(Config.KEY_RATE_OF_RETURN, "수익률", "http://recommend.finance.naver.com/Home/GetYieldList"));
+        mPagers.add(new SiteData(Config.KEY_TOP_RECOMMENDATION, "추천수", "http://recommend.finance.naver.com/Home/GetTopCompanyList"));
+        mPagers.add(new SiteData(Config.KEY_RECOMMENDATION, "현재 추천", "http://recommend.finance.naver.com/Home/RecommendDetail"));
         //mPagers.add(new SiteData(Config.KEY_NEWS, "뉴스", ""));
     }
 

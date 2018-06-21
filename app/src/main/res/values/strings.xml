@@ -65,18 +65,18 @@
     <string name="possession_item">보유 종목</string>
 
     <string name="rate_of_return">수익률</string>
-    <string name="recommend">추천</string>
-    <string name="recommend_date">추천일</string>
-    <string name="recommend_price">추천가</string>
-    <string name="recommend_count">추천수</string>
-    <string name="recommend_reason">추천 이유</string>
+    <string name="recommendation">추천</string>
+    <string name="date_of_recommendation">추천일</string>
+    <string name="price_of_recommendation">추천가</string>
+    <string name="number_of_recommendations">추천수</string>
+    <string name="reason_of_recommendation">추천 이유</string>
     <string name="remove_from_favorite">관심 종목에서 제거</string>
     <string name="remove_from_possession">보유 종목에서 제거</string>
     <string name="roe">ROE</string>
 
     <string name="site_link">사이트 링크 :</string>
 
-    <string name="predict_price">예상가</string>
+    <string name="prediction_stock_price">예측가</string>
     <string name="ten_years">10년</string>
     <string name="three_months">3개월</string>
     <string name="three_years">3년</string>

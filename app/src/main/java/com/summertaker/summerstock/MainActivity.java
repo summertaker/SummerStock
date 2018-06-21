@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,14 +22,22 @@ import android.view.animation.AnimationUtils;
 import com.summertaker.summerstock.common.BaseApplication;
 import com.summertaker.summerstock.common.BaseFragment;
 import com.summertaker.summerstock.data.SiteData;
+import com.summertaker.summerstock.util.OkHttpSingleton;
 import com.summertaker.summerstock.util.SlidingTabLayout;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
-        ItemListFragment.ItemListListener {
+        StockListFragment.ItemListListener {
 
+    private String mTag = this.getClass().getSimpleName();
     private Toolbar mToolbar;
 
     private View mMenuRefresh;
@@ -161,6 +170,34 @@ public class MainActivity extends AppCompatActivity implements
         return true;
     }
 
+    private void loadData() {
+        String url = "";
+        Request request = new Request.Builder().url(url).get().build();
+        OkHttpSingleton.getInstance().getClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseString = response.body().string();
+                //Log.e(mTag, "responseString\n" + responseString);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        parseData(responseString);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                Log.e(mTag, "Error: " + e.getMessage());
+            }
+        });
+    }
+
+    private void parseData(String response) {
+
+    }
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         private SectionsPagerAdapter(FragmentManager fm) {
@@ -170,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         public Fragment getItem(int position) {
             SiteData siteData = mPagers.get(position);
-            return ItemListFragment.newInstance(position, siteData.getId(), siteData.getUrl());
+            return StockListFragment.newInstance(position, siteData.getId(), siteData.getUrl());
         }
 
         @Override
@@ -199,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements
                 super.onBackPressed();
             }
         } else {
-            BaseFragment fragment = (ItemListFragment) f;
+            BaseFragment fragment = (StockListFragment) f;
 
             switch (command) {
                 case "goTop":

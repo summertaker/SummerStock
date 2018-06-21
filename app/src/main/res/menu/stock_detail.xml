@@ -12,7 +12,7 @@
     -->
 
     <!--
-    <item_detail
+    <stock_detail
         android:id="@+id/action_open_in_new"
         android:icon="@drawable/baseline_open_in_new_white_24"
         android:orderInCategory="100"

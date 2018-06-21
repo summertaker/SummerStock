@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView;
 import com.summertaker.summerstock.common.BaseActivity;
-import com.summertaker.summerstock.common.BaseApplication;
 import com.summertaker.summerstock.common.Config;
 import com.summertaker.summerstock.data.NewsData;
 import com.summertaker.summerstock.parser.DaumNewsParser;
@@ -30,16 +29,13 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ItemDetailActivity extends BaseActivity {
+public class StockDetailActivity extends BaseActivity {
 
     private String mCode;
     private String mName;
@@ -61,9 +57,9 @@ public class ItemDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_detail_activity);
+        setContentView(R.layout.stock_detail_activity);
 
-        mContext = ItemDetailActivity.this;
+        mContext = StockDetailActivity.this;
 
         setBaseStatusBar();
 
@@ -126,7 +122,7 @@ public class ItemDetailActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.item_detail, menu);
+        getMenuInflater().inflate(R.menu.stock_detail, menu);
         return true;
     }
 
@@ -621,7 +617,7 @@ public class ItemDetailActivity extends BaseActivity {
         });
 
         // 다음 금융 - 뉴스 목록
-        ItemDetailNewsAdapter adapter = new ItemDetailNewsAdapter(mContext, mNewsDataList);
+        StockDetailNewsAdapter adapter = new StockDetailNewsAdapter(mContext, mNewsDataList);
 
         ExpandableHeightListView listView = findViewById(R.id.newsListView);
         listView.setExpanded(true);

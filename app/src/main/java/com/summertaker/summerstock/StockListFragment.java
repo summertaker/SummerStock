@@ -14,8 +14,9 @@ import android.widget.ProgressBar;
 
 import com.summertaker.summerstock.common.BaseFragment;
 import com.summertaker.summerstock.common.Config;
-import com.summertaker.summerstock.data.ItemData;
+import com.summertaker.summerstock.data.StockData;
 import com.summertaker.summerstock.parser.NaverParser;
+import com.summertaker.summerstock.util.OkHttpSingleton;
 import com.summertaker.summerstock.util.Util;
 
 import org.json.JSONArray;
@@ -32,11 +33,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ItemListFragment extends BaseFragment {
+public class StockListFragment extends BaseFragment {
 
-    private ItemListFragment.ItemListListener mListener;
+    private StockListFragment.ItemListListener mListener;
 
-    private int mPosition = -1;
+    //private int mPosition = -1;
     private String mFragmentId = "";
     private String mUrl = "";
 
@@ -44,8 +45,8 @@ public class ItemListFragment extends BaseFragment {
     private ProgressBar mPbLoading;
 
     private boolean mIsLoading = false;
-    private ArrayList<ItemData> mDataList;
-    private ItemListAdapter mAdapter;
+    private ArrayList<StockData> mDataList;
+    private StockListAdapter mAdapter;
     private ListView mListView;
 
     // Container Activity must implement this interface
@@ -63,18 +64,18 @@ public class ItemListFragment extends BaseFragment {
             // This makes sure that the container activity has implemented
             // the callback interface. If not, it throws an exception
             try {
-                mListener = (ItemListFragment.ItemListListener) activity;
+                mListener = (StockListFragment.ItemListListener) activity;
             } catch (ClassCastException e) {
                 throw new ClassCastException(activity.toString() + " must implement OnHeadlineSelectedListener");
             }
         }
     }
 
-    public ItemListFragment() {
+    public StockListFragment() {
     }
 
-    public static ItemListFragment newInstance(int position, String fragmentId, String url) {
-        ItemListFragment fragment = new ItemListFragment();
+    public static StockListFragment newInstance(int position, String fragmentId, String url) {
+        StockListFragment fragment = new StockListFragment();
         Bundle args = new Bundle();
         args.putInt("position", position);
         args.putString("fragmentId", fragmentId);
@@ -86,7 +87,7 @@ public class ItemListFragment extends BaseFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.item_list_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.stock_list_fragment, container, false);
 
         //mLoLoading = rootView.findViewById(R.id.loLoading);
         //mPbLoading = rootView.findViewById(R.id.pbLoading);
@@ -94,14 +95,14 @@ public class ItemListFragment extends BaseFragment {
 
         mContext = getContext(); //.getApplicationContext();
 
-        mPosition = getArguments().getInt("position", -1);
+        //mPosition = getArguments().getInt("position", -1);
         mFragmentId = getArguments().getString("fragmentId");
         mUrl = getArguments().getString("url");
 
         mPbLoading = rootView.findViewById(R.id.pbLoading);
 
         mDataList = new ArrayList<>();
-        mAdapter = new ItemListAdapter(mContext, mFragmentId, mDataList);
+        mAdapter = new StockListAdapter(mContext, mFragmentId, mDataList);
 
         mListView = rootView.findViewById(R.id.listView);
         mListView.setAdapter(mAdapter);
@@ -109,9 +110,9 @@ public class ItemListFragment extends BaseFragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                ItemData data = (ItemData) adapterView.getItemAtPosition(position);
+                StockData data = (StockData) adapterView.getItemAtPosition(position);
 
-                Intent intent = new Intent(mContext, ItemDetailActivity.class);
+                Intent intent = new Intent(mContext, StockDetailActivity.class);
                 intent.putExtra("code", data.getCode());
                 intent.putExtra("name", data.getName());
                 intent.putExtra("price", data.getPrice());
@@ -124,7 +125,7 @@ public class ItemListFragment extends BaseFragment {
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-                ItemData data = (ItemData) adapterView.getItemAtPosition(position);
+                StockData data = (StockData) adapterView.getItemAtPosition(position);
                 updateFavorite(position, data.getCode()); // 즐겨찾기 설정
 
                 return true;
@@ -151,7 +152,22 @@ public class ItemListFragment extends BaseFragment {
         //String url = mUrl;
         //Log.e(mTag, "url: " + url);
 
-        if (mUrl.contains("GetTopCompanyList")) { // 네이버 > 추천종목 > 종목별추천건수 상위
+        if (mUrl.contains("GetYieldList")) { // 네이버 > 추천종목 > 추천종목별 수익률
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("brkcd", "0");
+                jsonObject.put("cmpcd", "");
+                jsonObject.put("curPage", "1");
+                jsonObject.put("enddt", Util.getToday("yyyyMMdd"));
+                jsonObject.put("orderCol", "6");
+                jsonObject.put("orderType", "D");
+                jsonObject.put("perPage", "100");
+                jsonObject.put("pfcd", "0");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            callData(jsonObject);
+        } else if (mUrl.contains("GetTopCompanyList")) { // 네이버 > 추천종목 > 종목별추천건수 상위
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("brkcd", "0");
@@ -183,7 +199,7 @@ public class ItemListFragment extends BaseFragment {
             callData(jsonObject);
         } else {
             Request request = new Request.Builder().url(mUrl).get().build();
-            mOkHttpClient.newCall(request).enqueue(new Callback() {
+            OkHttpSingleton.getInstance().getClient().newCall(request).enqueue(new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String responseString = response.body().string();
@@ -211,7 +227,7 @@ public class ItemListFragment extends BaseFragment {
 
         RequestBody requestBody = RequestBody.create(Config.JSON, postBody);
         Request request = new Request.Builder().url(mUrl).post(requestBody).build();
-        mOkHttpClient.newCall(request).enqueue(new Callback() {
+        OkHttpSingleton.getInstance().getClient().newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseString = response.body().string();
@@ -241,6 +257,28 @@ public class ItemListFragment extends BaseFragment {
                 JSONObject jsonObject = new JSONObject(response);
                 JSONArray jsonArray = jsonObject.getJSONArray("data");
                 //Log.e(mTag, "jsonArray.length() = " + jsonArray.length());
+
+                // 네이버 > 추천종목 > 추천종목별 수익률
+                /*
+                NUM	1
+                TOTROW	102
+                CMP_NM_KOR	DB하이텍
+                CMP_CD	000990
+                IN_DT	2018/05/16
+                CNT	35
+                BRK_NM_KOR	유안타증권
+                BRK_CD	12
+                PF_NM_KOR	대형주
+                PF_CD	111
+                ACCU_RTN	26.88524590164
+                W_RTN	2.9255
+                MN_RTN	28.1456
+                MN3_RTN	null
+                JAN1_RTN	null
+                REASON_IN	▶ 삼성전자 TV 신제품 효과로 제품 Mix 개선 본격화 ▶ 2분기 중후반부터 가파른 가동률/실적 상승 전망
+                ANL_DT	2018/05/15
+                IN_DIFF_REASON	장 종료후 추천으로 추천일자 순연
+                */
 
                 // 네이버 > 추천종목 > 종목별추천건수 상위
                 /*
@@ -282,57 +320,72 @@ public class ItemListFragment extends BaseFragment {
                 ANL_DT	2018/06/21
                 IN_DIFF_REASON	null
                  */
-                int no = 1;
+                int num = 1;
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
                     //Log.e(mTag, "object: " + object.toString());
 
-                    //int no = Util.getInt(object, "NUM");
+                    int no = Util.getInt(object, "NUM");
                     String code = Util.getString(object, "CMP_CD");
                     String name = Util.getString(object, "CMP_NM_KOR");
                     int price = Util.getInt(object, "prc");
-                    int predict = Util.getInt(object, "TO_ADJ_PRICE"); // 추천수 상위 > 예상가
-                    if (predict == 0) {
-                        predict = Util.getInt(object, "PRE_ADJ_CLOSE_PRC"); // 현재 추천 > 예상가
+                    int psp = Util.getInt(object, "TO_ADJ_PRICE"); // 추천수 상위 > 예측가
+                    if (psp == 0) {
+                        psp = Util.getInt(object, "PRE_ADJ_CLOSE_PRC"); // 현재 추천 > 예상가
                     }
                     int adp = Util.getInt(object, "adp");
                     float adr = BigDecimal.valueOf(Util.getDouble(object, "adr")).floatValue();
                     float per = BigDecimal.valueOf(Util.getDouble(object, "per")).floatValue();
                     float roe = BigDecimal.valueOf(Util.getDouble(object, "roe")).floatValue();
-                    int recommend = Util.getInt(object, "RECOMAND_CNT");
+                    int ndr = Util.getInt(object, "CNT");
+                    float ror = BigDecimal.valueOf(Util.getDouble(object, "ACCU_RTN")).floatValue();
+                    int nor = Util.getInt(object, "RECOMAND_CNT");
                     //String inReason = Util.getString(object, "in_reason");
                     //String favorite = Util.getString(object, "favorite");
                     //String possession = Util.getString(object, "possession");
 
-                    if (price > 0) {
+                    if (mFragmentId.equals(Config.KEY_RISING_STOCK) && price > 0) { // 주가
                         if (price < Config.PRICE_MIN || price > Config.PRICE_MAX) {
                             continue;
                         }
-                    } else if (predict > 0) {
-                        if (predict < Config.PRICE_MIN || predict > Config.PRICE_MAX) {
+                    } else if (mFragmentId.equals(Config.KEY_RATE_OF_RETURN) && ror > 0.0) { // 수익률
+                        if (ror < Config.ROR_MIN) {
+                            continue;
+                        }
+                    } else if (mFragmentId.equals(Config.KEY_RECOMMENDATION)) { // 현재 추천
+                        if (psp < Config.PRICE_MIN || psp > Config.PRICE_MAX) { // 예측가
+                            continue;
+                        }
+                        if (no > 60) { // 추천일 오래 된 주식은 제외
+                            break;
+                        }
+                    } else {
+                        if (psp < Config.PRICE_MIN || psp > Config.PRICE_MAX) { // 예측가
                             continue;
                         }
                     }
 
-                    //Log.e(mTag, mFragmentId + ": " + name);
+                    Log.e(mTag, no + ": " + name + " " + ror);
 
-                    ItemData data = new ItemData();
-                    data.setNo(no);
+                    StockData data = new StockData();
+                    data.setNo(num);
                     data.setCode(code);
                     data.setName(name);
                     data.setPrice(price);
-                    data.setPredict(predict);
+                    data.setPsp(psp);
                     data.setAdp(adp);
                     data.setAdr(adr);
                     data.setPer(per);
                     data.setRoe(roe);
-                    data.setRecommend(recommend);
+                    data.setNdr(ndr);
+                    data.setRor(ror);
+                    data.setNor(nor);
 
                     //data.setFavorite(favorite);
                     //data.setPossession(possession);
 
                     mDataList.add(data);
-                    no++;
+                    num++;
                 }
             } catch (JSONException e) {
                 Log.e(mTag, e.getMessage());

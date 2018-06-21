@@ -14,10 +14,8 @@ public class BaseFragment extends Fragment {
 
     protected String mTag = "== " + this.getClass().getSimpleName();
 
-    protected OkHttpClient mOkHttpClient;
-
     public BaseFragment() {
-        mOkHttpClient = OkHttpSingleton.getInstance().getClient();
+
     }
 
     public void goTop() {

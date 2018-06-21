@@ -78,10 +78,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/loPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/field_vspacing"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tvPriceTitle"
@@ -121,6 +123,44 @@
             android:text="@null"
             android:textColor="@color/black"
             android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loReturn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/field_vspacing"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/value_spacing"
+            android:singleLine="true"
+            android:text="@string/rate_of_return"
+            android:textColor="@color/light_black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvRor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/value_spacing"
+            android:singleLine="true"
+            android:text="@null"
+            android:textColor="@color/current_price"
+            android:textSize="@dimen/subtitle"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvNdr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@null"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

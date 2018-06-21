@@ -21,19 +21,10 @@ public class Config {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    public static int PRICE_MIN = 50000;
-    public static int PRICE_MAX = 300000;
-    public static float ADR_MIN = 2;
-
-    //public static int COLOR_PRICE_CURRENT = Color.parseColor("#388E3C");
-    public static int COLOR_PRICE_RISE = Color.parseColor("#D32F2F");
-    public static int COLOR_PRICE_FALL = Color.parseColor("#1976D2");
-
-    public static DecimalFormat NUMBER_FORMAT = new DecimalFormat("###,###,###");
-    public static DecimalFormat FLOAT_FORMAT = new DecimalFormat("###,###.##");
-
-    public static String KEY_RECOMMEND_TOP = "recommend_top";
-    public static String KEY_CURRRNET_RECOMMEND = "current_recommend";
+    public static String KEY_RISING_STOCK = "rising_item";
+    public static String KEY_RATE_OF_RETURN = "rate_of_return";
+    public static String KEY_TOP_RECOMMENDATION = "top_recommendation";
+    public static String KEY_RECOMMENDATION = "recommendation";
     public static String KEY_NEWS = "news";
     public static String KEY_FAVORITE = "favorite";
     public static String KEY_POSSESSION = "possession";
@@ -43,9 +34,22 @@ public class Config {
     public static String URL_NEWS_ITEM = "http://summertaker.cafe24.com/stock/api/news_item.php";
 
     public static String URL_ITEM_LIST = "http://summertaker.cafe24.com/stock/api/item_list.php";
-    public static String URL_ITEM_DETAIL = "http://summertaker.cafe24.com/stock/api/item_detail.php";
+    public static String URL_ITEM_DETAIL = "http://summertaker.cafe24.com/stock/api/stock_detail.php";
     public static String URL_ITEM_AUTOCOMPLETE = "http://summertaker.cafe24.com/stock/api/item_autocomplete.php";
 
     //public static String URL_FLUC_LIST = "http://summertaker.cafe24.com/stock/api/fluc_list.php";
     //public static String URL_RECO_LIST = "http://summertaker.cafe24.com/stock/api/reco_list.php";
+
+    //public static int COLOR_PRICE_CURRENT = Color.parseColor("#388E3C");
+    public static int COLOR_PRICE_RISE = Color.parseColor("#D32F2F");
+    public static int COLOR_PRICE_FALL = Color.parseColor("#1976D2");
+
+    public static DecimalFormat NUMBER_FORMAT = new DecimalFormat("###,###,###");
+    public static DecimalFormat FLOAT_FORMAT = new DecimalFormat("###,###.##");
+
+    public static int PRICE_MIN = 50000;  // 최소 가격
+    public static int PRICE_MAX = 300000; // 최대 가격
+    public static float ADP_MIN = 1000;   // 전일비
+    public static float ADR_MIN = 2.0f;   // 등락률
+    public static float ROR_MIN = 10.0f;  // 추천일 후 누적 수익률
 }

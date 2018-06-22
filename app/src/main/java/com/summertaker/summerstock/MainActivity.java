@@ -1,5 +1,6 @@
 package com.summertaker.summerstock;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,22 +22,17 @@ import android.view.animation.AnimationUtils;
 import com.summertaker.summerstock.common.BaseApplication;
 import com.summertaker.summerstock.common.BaseFragment;
 import com.summertaker.summerstock.data.Site;
-import com.summertaker.summerstock.util.OkHttpSingleton;
 import com.summertaker.summerstock.util.SlidingTabLayout;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         ItemListFragment.ItemListListener {
 
-    private String mTag = this.getClass().getSimpleName();
+    //private Context mContext;
+    //private String mTag = this.getClass().getSimpleName();
+
     private Toolbar mToolbar;
 
     private View mMenuRefresh;
@@ -51,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        //mContext = MainActivity.this;
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -86,13 +83,13 @@ public class MainActivity extends AppCompatActivity implements
 
         mRotateAnimation = AnimationUtils.loadAnimation(this, R.anim.rotate);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         mPagerItems = BaseApplication.getInstance().getPagerItems();
@@ -109,11 +106,63 @@ public class MainActivity extends AppCompatActivity implements
 
         SlidingTabLayout slidingTabLayout = findViewById(R.id.slidingTabs);
         slidingTabLayout.setViewPager(mViewPager);
+
+        /*
+        // 상승
+        LinearLayout loRise = findViewById(R.id.loRise);
+        loRise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, RiseActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 수익률
+        LinearLayout loReturn = findViewById(R.id.loReturn);
+        loReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ReturnActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 추천수
+        LinearLayout loTop = findViewById(R.id.loTop);
+        loTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, TopActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 현재 추천
+        LinearLayout loCurrent = findViewById(R.id.loCurrent);
+                loCurrent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, CurrentActivity.class);
+                        startActivity(intent);
+            }
+        });
+
+        // 실시간 주가
+        LinearLayout loRealtime = findViewById(R.id.loRealtime);
+        loRealtime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, RealtimeActivity.class);
+                startActivity(intent);
+            }
+        });
+        */
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -136,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements
                 Intent search = new Intent(this, SearchActivity.class);
                 startActivity(search);
                 return true;
+
             case R.id.action_refresh:
                 runFragment("refresh"); // 개별 프레그먼트 새로 고침
                 //refreshFragment();      // 전체 프레그먼트 새로 고침
@@ -145,10 +195,9 @@ public class MainActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        /*
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
@@ -164,38 +213,10 @@ public class MainActivity extends AppCompatActivity implements
         } else if (id == R.id.nav_send) {
 
         }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        */
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void loadData() {
-        String url = "";
-        Request request = new Request.Builder().url(url).get().build();
-        OkHttpSingleton.getInstance().getClient().newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responseString = response.body().string();
-                //Log.e(mTag, "responseString\n" + responseString);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        parseData(responseString);
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                call.cancel();
-                Log.e(mTag, "Error: " + e.getMessage());
-            }
-        });
-    }
-
-    private void parseData(String response) {
-
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -281,21 +302,21 @@ public class MainActivity extends AppCompatActivity implements
     private void doCommonFragmentEvent(String event) {
         switch (event) {
             case "onLoadStarted":
-                startAnimateRefresh();
+                startRefreshAnimation();
                 break;
             case "onLoadFinished":
-                stopAnimateRefresh();
+                stopRefreshAnimation();
                 break;
         }
     }
 
-    private void startAnimateRefresh() {
+    private void startRefreshAnimation() {
         if (mMenuRefresh != null) {
             mMenuRefresh.startAnimation(mRotateAnimation);
         }
     }
 
-    private void stopAnimateRefresh() {
+    private void stopRefreshAnimation() {
         if (mMenuRefresh != null) {
             mMenuRefresh.clearAnimation();
         }

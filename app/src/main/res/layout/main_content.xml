@@ -17,6 +17,163 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!--
+        <LinearLayout
+            android:id="@+id/loRise"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_item_rise_title"
+                android:textColor="@color/title"
+                android:textSize="@dimen/title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/value_spacing"
+                android:text="@string/main_item_rise_subtitle"
+                android:textColor="@color/dim_gray" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ccc" />
+
+        <LinearLayout
+            android:id="@+id/loReturn"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_item_return_title"
+                android:textColor="@color/title"
+                android:textSize="@dimen/title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/value_spacing"
+                android:text="@string/main_item_return_subtitle"
+                android:textColor="@color/dim_gray" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ccc" />
+
+        <LinearLayout
+            android:id="@+id/loTop"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_item_top_title"
+                android:textColor="@color/title"
+                android:textSize="@dimen/title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/value_spacing"
+                android:text="@string/main_item_top_subtitle"
+                android:textColor="@color/dim_gray" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ccc" />
+
+        <LinearLayout
+            android:id="@+id/loCurrent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_item_current_title"
+                android:textColor="@color/title"
+                android:textSize="@dimen/title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/value_spacing"
+                android:text="@string/main_item_current_subtitle"
+                android:textColor="@color/dim_gray" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ccc" />
+
+        <LinearLayout
+            android:id="@+id/loRealtime"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_item_realtime_title"
+                android:textColor="@color/title"
+                android:textSize="@dimen/title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/value_spacing"
+                android:text="@string/main_item_realtime_subtitle"
+                android:textColor="@color/dim_gray" />
+        </LinearLayout>
+        -->
+
         <com.summertaker.summerstock.util.SlidingTabLayout
             android:id="@+id/slidingTabs"
             android:layout_width="match_parent"

@@ -71,10 +71,11 @@ public class NaverParser extends BaseParser {
                 temp = tds.get(4).text();
                 temp = temp.replace(",", "");
                 temp = temp.replace("%", "");
+                temp = temp.replace("％", "");
                 adr = Float.valueOf(temp);
-                //if (adr < Config.ADR_MIN) {
-                //    continue;
-                //}
+                if (adr < Config.ADR_MIN) {
+                    continue;
+                }
 
                 temp = tds.get(5).text();
                 temp = temp.replace(",", "");
@@ -83,12 +84,14 @@ public class NaverParser extends BaseParser {
                 temp = tds.get(10).text();
                 temp = temp.replace(",", "");
                 temp = temp.replace("%", "");
+                temp = temp.replace("％", "");
                 temp = temp.replace("N/A", "0");
                 per = Float.valueOf(temp);
 
                 temp = tds.get(11).text();
                 temp = temp.replace(",", "");
                 temp = temp.replace("%", "");
+                temp = temp.replace("％", "");
                 temp = temp.replace("N/A", "0");
                 roe = Float.valueOf(temp);
 

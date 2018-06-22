@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ItemDetailActivity"
-    tools:showIn="@layout/item_detail_activity">
+    tools:context=".DetailActivity"
+    tools:showIn="@layout/detail_activity">
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -21,9 +21,81 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:background="#eeeeee"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/section_spacing"
+                android:paddingEnd="@dimen/activity_padding"
+                android:paddingStart="@dimen/activity_padding"
+                android:paddingTop="@dimen/section_spacing">
+
+                <!-- 현재가 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_price"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/value_spacing"
+                    android:textColor="@color/current_price"
+                    android:textSize="@dimen/subtitle"
+                    android:textStyle="bold" />
+
+                <!-- 등락률 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/field_hspacing"
+                    android:text="@string/advanced_decline_rate"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    android:id="@+id/tvAdr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/value_spacing"
+                    android:textColor="@color/title"
+                    android:textSize="@dimen/subtitle"
+                    android:textStyle="bold" />
+
+                <!-- 전일비 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/field_hspacing"
+                    android:text="@string/advanced_decline_price"
+                    android:textColor="@color/title" />
+
+                <TextView
+                    android:id="@+id/tvAdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/value_spacing"
+                    android:textColor="@color/title" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ccc" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="@dimen/activity_padding">
+
+                <!-- 사이트 링크 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/field_hspacing"
+                    android:text="@string/site_link"
+                    android:textColor="@color/black" />
 
                 <!-- 네이버 금융 링크 -->
                 <TextView
@@ -54,8 +126,6 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginEnd="@dimen/activity_padding"
-                android:layout_marginStart="@dimen/activity_padding"
                 android:layout_marginTop="@dimen/value_spacing"
                 android:background="#ccc" />
 
@@ -103,106 +173,6 @@
                     android:background="@drawable/chart_background"
                     android:contentDescription="@null" />
 
-                <!-- 월봉 차트 -->
-                <!--
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_padding"
-                    android:text="@string/monthly_pipe"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/ivM1Chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/daum_chart_height"
-                    android:layout_marginTop="@dimen/field_hspacing"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/chart_background"
-                    android:contentDescription="@null" />
-                    -->
-
-                <!-- 주 차트 -->
-                <!--
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_padding"
-                    android:text="@string/one_week"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/ivWeekChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/naver_chart_height"
-                    android:layout_marginTop="@dimen/field_hspacing"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/chart_background"
-                    android:contentDescription="@null" />
-                    -->
-
-                <!-- 월 차트 -->
-                <!--
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_padding"
-                    android:text="@string/one_month"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/ivMonthChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/daum_chart_height"
-                    android:layout_marginTop="@dimen/field_hspacing"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/chart_background"
-                    android:contentDescription="@null" />
-                    -->
-
-                <!-- 3개월 차트 -->
-                <!--
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_padding"
-                    android:text="@string/three_months"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/ivMonth3Chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/daum_chart_height"
-                    android:layout_marginTop="@dimen/field_hspacing"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/chart_background"
-                    android:contentDescription="@null" />
-                    -->
-
-                <!-- 1년 차트 -->
-                <!--
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/graph_spacing"
-                    android:text="@string/one_year"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/ivYearChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/daum_chart_height"
-                    android:layout_marginTop="@dimen/field_spacing"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/chart_background"
-                    android:contentDescription="@null" />
-                -->
-
                 <!-- 3년 차트 -->
                 <TextView
                     android:layout_width="wrap_content"
@@ -221,75 +191,11 @@
                     android:background="@drawable/chart_background"
                     android:contentDescription="@null" />
 
-                <!--
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/section_spacing"
-                    android:text="@string/five_years"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-                <ImageView
-                    android:id="@+id/ivYear5Chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/daum_chart_height"
-                    android:layout_marginTop="@dimen/field_vspacing"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/chart_background"
-                    android:contentDescription="@null" />
-                -->
-
-                <!-- 10년 차트 -->
-                <!--
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/section_spacing"
-                    android:text="@string/ten_years"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-                <ImageView
-                    android:id="@+id/ivYear10Chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/daum_chart_height"
-                    android:layout_marginTop="@dimen/field_hspacing"
-                    android:adjustViewBounds="true"
-                    android:background="@drawable/chart_background"
-                    android:contentDescription="@null" />
-                -->
-
-                <!-- 추천 이유 제목 -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/section_spacing"
-                    android:text="@string/reason_of_recommendation"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/subtitle"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/hr_spacing"
-                    android:background="#ccc" />
-
-                <!-- 추천 이유 -->
-                <TextView
-                    android:id="@+id/tvInReason"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/hr_spacing"
-                    android:lineSpacingExtra="@dimen/line_spacing"
-                    android:text="@null"
-                    android:textColor="@color/light_black"
-                    android:textSize="@dimen/subtitle" />
-
                 <!-- 뉴스 래퍼  -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/section_spacing"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
                     <!-- 뉴스 -->

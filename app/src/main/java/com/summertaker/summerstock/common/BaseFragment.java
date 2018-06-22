@@ -36,7 +36,7 @@ public class BaseFragment extends Fragment {
 
     protected void updateFavorite(String itemCd, final TextView tvFavorite) {
         /*
-        //startAnimateRefresh();
+        //startRefreshAnimation();
 
         String url = Config.URL_FAVORITE_UPDATE + itemCd;
         //Log.e(mTag, "url: " + url);
@@ -52,7 +52,7 @@ public class BaseFragment extends Fragment {
                     tvFavorite.setText(getString(R.string.favorite_on));
                     tvFavorite.setTextColor(getResources().getColor(R.color.favorite_on));
                 }
-                //stopAnimateRefresh();
+                //stopRefreshAnimation();
             }
         }, new Response.ErrorListener() {
             @Override

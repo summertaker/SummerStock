@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,6 +36,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     private GestureDetector gestureDetector;
 
+    public BaseActivity() {
+        mContext = BaseActivity.this;
+    }
+
     protected void setBaseStatusBar() {
         // https://stackoverflow.com/questions/22192291/how-to-change-the-status-bar-color-in-android
         Window window = this.getWindow();
@@ -44,13 +49,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void initToolbar(String title) {
-        mContext = BaseActivity.this;
-        mResources = mContext.getResources();
-
-        gestureDetector = new GestureDetector(this, new SwipeDetector());
-
         //mSharedPreferences = getSharedPreferences(Config.USER_PREFERENCE_KEY, 0);
         //mSharedEditor = mSharedPreferences.edit();
+
+        mResources = mContext.getResources();
+        gestureDetector = new GestureDetector(this, new SwipeDetector());
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -60,12 +63,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                 onToolbarClick();
             }
         });
+        /*
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        */
 
         mToolbar.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -106,13 +111,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    protected void startAnimateRefresh() {
+    protected void startRefreshAnimation() {
         if (mMenuRefresh != null) {
             mMenuRefresh.startAnimation(mRotateAnimation);
         }
     }
 
-    protected void stopAnimateRefresh() {
+    protected void stopRefreshAnimation() {
         if (mMenuRefresh != null) {
             mMenuRefresh.clearAnimation();
         }
@@ -169,5 +174,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void onSwipeRight();
 
     protected abstract void onSwipeLeft();
+
+
+    @Override
+    public void onStop() {
+        //Log.e(mTag, "onStop()...");
+
+        super.onStop();
+
+        BaseApplication.getInstance().cancelPendingRequests(mVolleyTag);
+    }
 }
 

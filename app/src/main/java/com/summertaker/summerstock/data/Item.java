@@ -6,15 +6,16 @@ public class Item {
     private String name;
     private int price;
     private int psp; // prediction stock price
-    private String indt;
+    private String pdt; // prediction date
     private int adp;
     private float adr;
     private int volume;
     private float per;
     private float roe;
-    private int ndr; // Number of days after Recommendation
+    private int ndp; // Number of days after Prediction
     private float ror; // Rate of Return
     private int nor; // Number of Recommendations
+    private String reason;
 
     private String favorite;
     private String possession;
@@ -51,20 +52,20 @@ public class Item {
         this.price = price;
     }
 
-    public String getIndt() {
-        return indt;
-    }
-
-    public void setIndt(String indt) {
-        this.indt = indt;
-    }
-
     public int getPsp() {
         return psp;
     }
 
     public void setPsp(int psp) {
         this.psp = psp;
+    }
+
+    public String getPdt() {
+        return pdt;
+    }
+
+    public void setPdt(String pdt) {
+        this.pdt = pdt;
     }
 
     public int getAdp() {
@@ -107,12 +108,12 @@ public class Item {
         this.roe = roe;
     }
 
-    public int getNdr() {
-        return ndr;
+    public int getNdp() {
+        return ndp;
     }
 
-    public void setNdr(int ndr) {
-        this.ndr = ndr;
+    public void setNdp(int ndp) {
+        this.ndp = ndp;
     }
 
     public float getRor() {
@@ -129,6 +130,14 @@ public class Item {
 
     public void setNor(int nor) {
         this.nor = nor;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public String getFavorite() {

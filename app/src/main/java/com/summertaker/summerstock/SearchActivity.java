@@ -3,7 +3,8 @@ package com.summertaker.summerstock;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -12,14 +13,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.summertaker.summerstock.common.BaseActivity;
+import com.summertaker.summerstock.common.BaseApplication;
 import com.summertaker.summerstock.common.Config;
 import com.summertaker.summerstock.data.Item;
-import com.summertaker.summerstock.util.Util;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.summertaker.summerstock.parser.DaumParser;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,9 @@ public class SearchActivity extends BaseActivity {
     LinearLayout mLoMain;
     AutoCompleteTextView mTvAucoComplete;
 
+    private ArrayList<String> mUrls;
+    int mUrlLoadCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,10 @@ public class SearchActivity extends BaseActivity {
         setBaseStatusBar();
         initToolbar(null);
 
+        mUrls = new ArrayList<>();
+        mUrls.add(Config.URL_KOSPI_LIST);
+        mUrls.add(Config.URL_KOSDAQ_LIST);
+
         mItemList = new ArrayList<>();
 
         mPbLoading = findViewById(R.id.pbLoading);
@@ -50,11 +59,33 @@ public class SearchActivity extends BaseActivity {
         requestData();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_finish:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void requestData() {
-        String url = Config.URL_ITEM_AUTOCOMPLETE;
+        String url = mUrls.get(mUrlLoadCount);
         //Log.e(mTag, "url: " + url);
 
-        /*
         StringRequest strReq = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -66,54 +97,26 @@ public class SearchActivity extends BaseActivity {
             public void onErrorResponse(VolleyError error) {
                 parseData("");
             }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json; charset=utf-8");
-                //headers.put("User-agent", mSiteData.getUserAgent());
-                return headers;
-            }
-        };
+        });
 
         BaseApplication.getInstance().addToRequestQueue(strReq, mVolleyTag);
-        */
     }
 
     private void parseData(String response) {
+        //mItemList.clear();
 
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            JSONArray jsonArray = jsonObject.getJSONArray("result");
-            //Log.e(mTag, "jsonArray.length() = " + jsonArray.length());
+        DaumParser daumParser = new DaumParser();
+        daumParser.parseAllItemPrice(response, mItemList);
 
-            //DecimalFormat formatter = new DecimalFormat("###,###,###");
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject object = jsonArray.getJSONObject(i);
-                //Log.e(mTag, "object: " + object.toString());
-
-                String itemCd = Util.getString(object, "item_cd");
-                String itemNm = Util.getString(object, "item_nm");
-                //int prc = Integer.valueOf(Util.getString(object, "prc"));
-                //float adr = BigDecimal.valueOf(Util.getDouble(object, "adr")).floatValue();
-
-                Item data = new Item();
-                data.setCode(itemCd);
-                data.setName(itemNm);
-                //data.setPrc(prc);
-                //data.setAdr(adr);
-
-                mItemList.add(data);
-            }
-        } catch (JSONException e) {
-            Log.e(mTag, e.getMessage());
+        mUrlLoadCount++;
+        if (mUrlLoadCount < mUrls.size()) {
+            requestData();
+        } else {
+            renderData();
         }
-
-        render();
     }
 
-    private void render() {
+    private void renderData() {
         mPbLoading.setVisibility(View.GONE);
         mLoMain.setVisibility(View.VISIBLE);
         //mTvAucoComplete.setVisibility(View.VISIBLE);
@@ -131,18 +134,18 @@ public class SearchActivity extends BaseActivity {
         mTvAucoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String itemNm = parent.getItemAtPosition(position).toString();
-                String itemCd = "";
+                String name = parent.getItemAtPosition(position).toString();
+                String code = "";
 
                 for (Item item : mItemList) {
-                    if (itemNm.equals(item.getName())) {
-                        itemCd = item.getCode();
+                    if (name.equals(item.getName())) {
+                        code = item.getCode();
                         break;
                     }
                 }
 
-                Intent intent = new Intent(mContext, ItemDetailActivity.class);
-                intent.putExtra("itemCd", itemCd);
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra("code", code);
                 startActivity(intent);
             }
         });

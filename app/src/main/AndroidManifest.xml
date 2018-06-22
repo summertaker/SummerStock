@@ -25,9 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".ItemDetailActivity"
+            android:name=".DetailActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -38,6 +37,26 @@
             android:name=".WebActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RiseActivity"
+            android:label="@string/title_activity_rise"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ReturnActivity"
+            android:label="@string/title_activity_return"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TopActivity"
+            android:label="@string/title_activity_top"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CurrentActivity"
+            android:label="@string/title_activity_current"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RealtimeActivity"
+            android:label="@string/title_activity_realtime"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

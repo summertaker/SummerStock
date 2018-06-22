@@ -20,19 +20,29 @@ public class Config {
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    public static String KEY_RISING_ITEM = "rising_item";
-    public static String KEY_RATE_OF_RETURN = "rate_of_return";
-    public static String KEY_TOP_RECOMMENDATION = "top_recommendation";
-    public static String KEY_RECOMMENDATION = "recommendation";
+    public static String KEY_RISING = "rising_item";
+    public static String KEY_RETURN = "rate_of_return";
+    public static String KEY_TOP = "top_recommendation";
+    public static String KEY_CURRENT = "recommendation";
     public static String KEY_NEWS = "news";
     public static String KEY_FAVORITE = "favorite";
     public static String KEY_POSSESSION = "possession";
 
-    public static String URL_MY_UPDATE = "http://summertaker.cafe24.com/stock/api/my_update.php";
-    public static String URL_NEWS_ITEM = "http://summertaker.cafe24.com/stock/api/news_item.php";
-    public static String URL_ITEM_LIST = "http://summertaker.cafe24.com/stock/api/item_list.php";
-    public static String URL_ITEM_DETAIL = "http://summertaker.cafe24.com/stock/api/stock_detail.php";
-    public static String URL_ITEM_AUTOCOMPLETE = "http://summertaker.cafe24.com/stock/api/item_autocomplete.php";
+    public static String URL_RISE_LIST = "http://finance.naver.com/sise/sise_rise.nhn";
+    public static String URL_RETURN_LIST = "http://recommend.finance.naver.com/Home/GetYieldList";
+    public static String URL_TOP_LIST = "http://recommend.finance.naver.com/Home/GetTopCompanyList";
+    public static String URL_CURRENT_LIST = "http://recommend.finance.naver.com/Home/RecommendDetail";
+
+    public static String URL_ITEM_DETAIL = "http://finance.daum.net/item/main.daum?code=";
+    public static String URL_KOSPI_LIST = "http://finance.daum.net/quote/all.daum?type=S&stype=P";
+    public static String URL_KOSDAQ_LIST = "http://finance.daum.net/quote/all.daum?type=S&stype=Q";
+    public static String URL_NEWS_LIST = "http://finance.daum.net/item/news.daum?code=";
+
+    //public static String URL_MY_UPDATE = "http://summertaker.cafe24.com/stock/api/my_update.php";
+    //public static String URL_NEWS_ITEM = "http://summertaker.cafe24.com/stock/api/news_item.php";
+    //public static String URL_ITEM_LIST = "http://summertaker.cafe24.com/stock/api/item_list.php";
+    //public static String URL_ITEM_DETAIL = "http://summertaker.cafe24.com/stock/api/stock_detail.php";
+    //public static String URL_ITEM_AUTOCOMPLETE = "http://summertaker.cafe24.com/stock/api/item_autocomplete.php";
     //public static String URL_FLUC_LIST = "http://summertaker.cafe24.com/stock/api/fluc_list.php";
     //public static String URL_RECO_LIST = "http://summertaker.cafe24.com/stock/api/reco_list.php";
 
@@ -42,6 +52,8 @@ public class Config {
 
     public static DecimalFormat NUMBER_FORMAT = new DecimalFormat("###,###,###");
     public static DecimalFormat FLOAT_FORMAT = new DecimalFormat("###,###.##");
+
+    public static String DATE_FORMAT = "M월 d일";
 
     public static int PRICE_MIN = 50000;  // 최소 가격
     public static int PRICE_MAX = 300000; // 최대 가격

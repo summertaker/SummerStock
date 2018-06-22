@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/activity_padding"
+    android:paddingEnd="@dimen/section_spacing"
+    android:paddingStart="@dimen/activity_padding"
+    android:paddingTop="@dimen/activity_padding">
+
+    <!-- 번호 -->
+    <TextView
+        android:id="@+id/tvNo"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/value_spacing"
+        android:gravity="end"
+        android:text="@null"
+        android:textColor="@color/black"
+        android:textSize="@dimen/subtitle" />
+
+    <!-- 종목 이름 -->
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:singleLine="true"
+        android:text="@null"
+        android:textColor="@color/title"
+        android:textSize="@dimen/subtitle"
+        android:textStyle="bold" />
+
+    <!-- 현재가 -->
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="@null"
+        android:textSize="@dimen/subtitle" />
+
+    <!-- 등락률 -->
+    <TextView
+        android:id="@+id/tvAdr"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="@null"
+        android:textSize="@dimen/subtitle" />
+
+</LinearLayout>

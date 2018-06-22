@@ -52,7 +52,7 @@ public class ItemListFragment extends BaseFragment {
 
     private boolean mIsLoading = false;
     private ArrayList<Item> mDataList;
-    private ItemListAdapter mAdapter;
+    //private ItemListAdapter mAdapter;
     private ListView mListView;
 
     // Container Activity must implement this interface
@@ -109,17 +109,17 @@ public class ItemListFragment extends BaseFragment {
         mPbLoading = rootView.findViewById(R.id.pbLoading);
 
         mDataList = new ArrayList<>();
-        mAdapter = new ItemListAdapter(mContext, mFragmentId, mDataList);
+        //mAdapter = new ItemListAdapter(mContext, mFragmentId, mDataList);
 
         mListView = rootView.findViewById(R.id.listView);
-        mListView.setAdapter(mAdapter);
+        //mListView.setAdapter(mAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Item data = (Item) adapterView.getItemAtPosition(position);
 
-                Intent intent = new Intent(mContext, ItemDetailActivity.class);
+                Intent intent = new Intent(mContext, DetailActivity.class);
                 intent.putExtra("code", data.getCode());
                 intent.putExtra("name", data.getName());
                 intent.putExtra("price", data.getPrice());
@@ -256,6 +256,8 @@ public class ItemListFragment extends BaseFragment {
     }
 
     private void parseData(String response) {
+        mDataList.clear();
+
         if (mUrl.contains("sise_rise.nhn")) {
             NaverParser naverParser = new NaverParser();
             naverParser.parseRise(response, mDataList);
@@ -326,9 +328,10 @@ public class ItemListFragment extends BaseFragment {
                 FILE_NM	01211120180621_069620.pdf
                 ANL_DT	2018/06/21
                 IN_DIFF_REASON	null
-                 */
-                DateFormat inDf = new SimpleDateFormat("yy/MM/dd", Locale.getDefault());
-                DateFormat outDf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                */
+
+                DateFormat inDf = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+                DateFormat outDf = new SimpleDateFormat(Config.DATE_FORMAT, Locale.getDefault());
 
                 Calendar cal = Calendar.getInstance();
                 Date d = cal.getTime();
@@ -370,7 +373,7 @@ public class ItemListFragment extends BaseFragment {
                     int ndr = Util.getInt(object, "CNT"); // 경과일
                     float ror = BigDecimal.valueOf(Util.getDouble(object, "ACCU_RTN")).floatValue();
                     int nor = Util.getInt(object, "RECOMAND_CNT");
-                    //String inReason = Util.getString(object, "in_reason");
+
                     //String favorite = Util.getString(object, "favorite");
                     //String possession = Util.getString(object, "possession");
 
@@ -380,15 +383,15 @@ public class ItemListFragment extends BaseFragment {
                         }
                     }
 
-                    if (mFragmentId.equals(Config.KEY_RATE_OF_RETURN)) { // 추천주 수익률
+                    if (mFragmentId.equals(Config.KEY_RETURN)) { // 추천주 수익률
                         if (ror < Config.ROR_MIN) {
                             continue;
                         }
-                    } else if (mFragmentId.equals(Config.KEY_TOP_RECOMMENDATION)) { // 추천수 상위
+                    } else if (mFragmentId.equals(Config.KEY_TOP)) { // 추천수 상위
                         if (psp < Config.PRICE_MIN || psp > Config.PRICE_MAX) {
                             continue;
                         }
-                    } else if (mFragmentId.equals(Config.KEY_RECOMMENDATION)) { // 현재 추천
+                    } else if (mFragmentId.equals(Config.KEY_CURRENT)) { // 현재 추천
                         if (psp < Config.PRICE_MIN || psp > Config.PRICE_MAX) {
                             continue;
                         }
@@ -405,12 +408,12 @@ public class ItemListFragment extends BaseFragment {
                     item.setName(name);
                     item.setPrice(price);
                     item.setPsp(psp);
-                    item.setIndt(indt);
+                    item.setPdt(indt);
                     item.setAdp(adp);
                     item.setAdr(adr);
                     item.setPer(per);
                     item.setRoe(roe);
-                    item.setNdr(ndr);
+                    item.setNdp(ndr);
                     item.setRor(ror);
                     item.setNor(nor);
 
@@ -437,7 +440,21 @@ public class ItemListFragment extends BaseFragment {
             mIsFirstLoading = false;
         }
 
-        mAdapter.notifyDataSetChanged();
+        if (mFragmentId.equals(Config.KEY_RISING)) {
+            RiseAdapter adapter = new RiseAdapter(mContext, mDataList);
+            mListView.setAdapter(adapter);
+        } else if (mFragmentId.equals(Config.KEY_RETURN)) {
+            ReturnAdapter adapter = new ReturnAdapter(mContext, mDataList);
+            mListView.setAdapter(adapter);
+        } else if (mFragmentId.equals(Config.KEY_TOP)) {
+            TopAdapter adapter = new TopAdapter(mContext, mDataList);
+            mListView.setAdapter(adapter);
+        } else if (mFragmentId.equals(Config.KEY_CURRENT)) {
+            CurrentAdapter adapter = new CurrentAdapter(mContext, mDataList);
+            mListView.setAdapter(adapter);
+        }
+
+        //mAdapter.notifyDataSetChanged();
 
         mIsLoading = false;
         mListener.onItemListEvent("onLoadFinished");
@@ -452,8 +469,6 @@ public class ItemListFragment extends BaseFragment {
             mListener.onItemListEvent("onLoadFinished");
         } else {
             //goTop();
-            mDataList.clear();
-
             mPbLoading.setVisibility(View.VISIBLE);
             mListView.setVisibility(View.GONE);
             mIsFirstLoading = true;
@@ -463,13 +478,13 @@ public class ItemListFragment extends BaseFragment {
     }
 
     private void updateFavorite(final int position, String itemCd) {
-        mListener.onItemListEvent("onLoadStarted");
+        //mListener.onItemListEvent("onLoadStarted");
 
-        String category = Config.KEY_FAVORITE;
+        //String category = Config.KEY_FAVORITE;
         //if (mFragmentId.equals(Config.KEY_POSSESSION)) {
         //    category = Config.KEY_POSSESSION;
         //}
-        String url = Config.URL_MY_UPDATE + "?item_cd=" + itemCd + "&category=" + category;
+        //String url = Config.URL_MY_UPDATE + "?item_cd=" + itemCd + "&category=" + category;
         //Log.e(mTag, ">>>" + url);
 
         /*

@@ -58,23 +58,24 @@ public class DaumNewsParser extends BaseParser {
 
             el = li.select("strong > a").first();
             title = el.text();
-            if (itemNm != null && !itemNm.isEmpty()) {
-                if (!title.contains(itemNm)) {
-                    continue;
-                }
-            }
+            //if (itemNm != null && !itemNm.isEmpty()) {
+            //    if (!title.contains(itemNm)) {
+            //        continue;
+            //    }
+            //}
 
-            if (title.contains("신고가") || title.contains("신저가") || title.contains("상담") || title.contains("주주")
-                    || title.contains("반등") || title.contains("증자") || title.contains("배당")) {
-                continue;
-            }
+            //if (title.contains("신고가") || title.contains("신저가") || title.contains("상담") || title.contains("주주")
+            //        || title.contains("하한가") || title.contains("상한가") || title.contains("반등") || title.contains("증자")
+            //        || title.contains("배당")) {
+            //    continue;
+            //}
 
             title = title.replaceAll("\\[.*\\]", "");
             title = title.replaceAll("\\.\\.", "");
             title = title.trim();
 
             if (itemNm != null && !itemNm.isEmpty()) {
-                title = title.replace(itemNm, "<font color='#1565C0'>" + itemNm + "</font>");
+                title = title.replace(itemNm, "<font color='#C62828'>" + itemNm + "</font>");
             }
 
             url = el.attr("href");
@@ -95,8 +96,15 @@ public class DaumNewsParser extends BaseParser {
             }
             //published = published + ":00";
 
+            //if (elapsed > 20) {
+            //    continue;
+            //}
+
             el = li.select("p > a").first();
             summary = el.text();
+            summary = summary.replaceAll("\\[.*\\]", "");
+            summary = summary.replaceAll("\\(\\d+\\)", "");
+            summary = summary.trim();
 
             //Log.e(mTag, title + " " + published + " " + url);
 

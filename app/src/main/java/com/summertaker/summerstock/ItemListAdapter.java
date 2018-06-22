@@ -2,7 +2,6 @@ package com.summertaker.summerstock;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,7 @@ import com.summertaker.summerstock.common.BaseDataAdapter;
 import com.summertaker.summerstock.common.Config;
 import com.summertaker.summerstock.data.Item;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class ItemListAdapter extends BaseDataAdapter {
 
@@ -175,13 +168,14 @@ public class ItemListAdapter extends BaseDataAdapter {
             holder.tvAdp.setText(adp);
         }
 
+        /*
         // 추천일
         if (data.getIndt() == null || data.getIndt().isEmpty()) {
             holder.tvIndt.setVisibility(View.GONE);
         } else {
             holder.tvIndt.setVisibility(View.VISIBLE);
 
-            String indt = mResources.getString(R.string.date_of_recommendation) + " " + data.getIndt();
+            String indt = mResources.getString(R.string.recommendation_date) + " " + data.getIndt();
             if (data.getNdr() > 0) {
                 indt = indt + " (" + data.getNdr() + "일 전" + ")";
             }
@@ -211,6 +205,7 @@ public class ItemListAdapter extends BaseDataAdapter {
                 holder.tvNdr.setText(ndr);
             }
         }
+        */
 
         /*
         // 수정가

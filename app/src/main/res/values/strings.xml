@@ -66,7 +66,7 @@
 
     <string name="rate_of_return">수익률</string>
     <string name="recommendation">추천</string>
-    <string name="date_of_recommendation">추천일</string>
+    <string name="recommendation_date">추천일</string>
     <string name="price_of_recommendation">추천가</string>
     <string name="number_of_recommendations">추천수</string>
     <string name="reason_of_recommendation">추천 이유</string>
@@ -76,6 +76,7 @@
 
     <string name="site_link">사이트 링크 :</string>
 
+    <string name="prediction_date">예측일</string>
     <string name="prediction_stock_price">예측가</string>
     <string name="ten_years">10년</string>
     <string name="three_months">3개월</string>
@@ -85,24 +86,30 @@
 
     <string name="weekly_pipe">주봉</string>
 
-    <string name="main_list_item_news_title">뉴스</string>
-    <string name="main_list_item_news_subtitle">보유, 관심</string>
-    <string name="main_list_item_my_title">마이</string>
-    <string name="main_list_item_my_subtitle">보유, 관심</string>
-    <string name="main_list_item_reco_title">추천</string>
-    <string name="main_list_item_reco_subtitle">수익률, 추천수, 현재 추천</string>
+    <string name="main_item_news_title">뉴스</string>
+    <string name="main_item_news_subtitle">보유, 관심</string>
+    <string name="main_item_my_title">마이</string>
+    <string name="main_item_my_subtitle">보유, 관심</string>
+    <string name="main_item_rise_title">상승</string>
+    <string name="main_item_rise_subtitle">주가 상승 종목</string>
+    <string name="main_item_return_title">수익률</string>
+    <string name="main_item_return_subtitle">추천종목별 수익률</string>
+    <string name="main_item_top_title">추천 상위</string>
+    <string name="main_item_top_subtitle">종목별추천건수 상위</string>
+    <string name="main_item_current_title">현재 추천</string>
+    <string name="main_item_current_subtitle">현재 추천종목</string>
+    <string name="main_item_realtime_title">실시간 주가</string>
+    <string name="main_item_realtime_subtitle">실시간 주가 보기</string>
 
     <string name="title_activity_web">웹</string>
-    <string name="title_activity_item">종목</string>
+    <string name="title_activity_detail">종목</string>
     <string name="title_activity_search">검색</string>
     <string name="title_activity_favorite">즐겨찾기</string>
-    <string name="title_activity_reco">추천</string>
-    <string name="title_activity_news">NewsActivity</string>
-    <string name="title_activity_favorite_list">FavoriteListActivity</string>
-    <string name="title_activity_item_rise">ItemRiseActivity</string>
-    <string name="title_activity_reco_current">RecoCurrentActivity</string>
-    <string name="title_activity_reco_top">RecoTopActivity</string>
-    <string name="title_activity_reco_return_list">RecoReturnListActivity</string>
-    <string name="title_activity_my">MyActivity</string>
-    <string name="title_activity_item_list">ItemListActivity</string>
+    <string name="title_activity_my">마이</string>
+    <string name="title_activity_item_list">종목</string>
+    <string name="title_activity_rise">상승</string>
+    <string name="title_activity_return">추천 수익률</string>
+    <string name="title_activity_top">추천수 상위</string>
+    <string name="title_activity_current">현재 추천</string>
+    <string name="title_activity_realtime">실시간 주가</string>
 </resources>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- 보유 -->
+        <TextView
+            android:id="@+id/tvPossession"
+            style="@style/DangerLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/value_spacing"
+            android:paddingBottom="2dp"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            android:paddingTop="2dp"
+            android:text="@string/possession"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <!-- 관심: 글자 -->
+        <TextView
+            android:id="@+id/tvFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/value_spacing"
+            android:text="@string/favorite_off"
+            android:textColor="@color/favorite_off"
+            android:textSize="@dimen/title"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <!-- 순차 번호 -->
+        <TextView
+            android:id="@+id/tvNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/value_spacing"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@null"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title" />
+
+        <!-- 종목 이름 -->
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@null"
+            android:textColor="@color/title"
+            android:textSize="@dimen/title"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/field_vspacing"
+        android:orientation="horizontal">
+
+        <!-- 현재가: 텍스트 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@string/current_price"
+            android:textColor="@color/black" />
+
+        <!-- 현재가 -->
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/value_spacing"
+            android:singleLine="true"
+            android:text="@null"
+            android:textColor="@color/current_price"
+            android:textSize="@dimen/subtitle"
+            android:textStyle="bold" />
+
+        <!-- 등락률: 텍스트 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/field_hspacing"
+            android:singleLine="true"
+            android:text="@string/advanced_decline_rate"
+            android:textColor="@color/black" />
+
+        <!-- 등락률 -->
+        <TextView
+            android:id="@+id/tvAdr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/value_spacing"
+            android:singleLine="true"
+            android:text="@null"
+            android:textSize="@dimen/subtitle"
+            android:textStyle="bold" />
+
+        <!-- 전일비: 텍스트 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/field_hspacing"
+            android:singleLine="true"
+            android:text="@string/advanced_decline_price"
+            android:textColor="@color/black" />
+
+        <!-- 전일비 -->
+        <TextView
+            android:id="@+id/tvAdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/value_spacing"
+            android:singleLine="true"
+            android:text="@null"
+            android:textColor="@color/rise_price" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivChart"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/naver_chart_height"
+        android:layout_marginTop="@dimen/activity_padding"
+        android:adjustViewBounds="true"
+        android:background="@drawable/chart_background"
+        android:contentDescription="@null" />
+
+</LinearLayout>

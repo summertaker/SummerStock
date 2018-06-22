@@ -12,13 +12,13 @@ import com.summertaker.summerstock.data.News;
 
 import java.util.ArrayList;
 
-public class ItemDetailNewsAdapter extends BaseDataAdapter {
+public class DetailNewsAdapter extends BaseDataAdapter {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private ArrayList<News> mDataList = null;
 
-    public ItemDetailNewsAdapter(Context context, ArrayList<News> dataList) {
+    public DetailNewsAdapter(Context context, ArrayList<News> dataList) {
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mDataList = dataList;
@@ -40,13 +40,13 @@ public class ItemDetailNewsAdapter extends BaseDataAdapter {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final ItemDetailNewsAdapter.ViewHolder holder;
+        final DetailNewsAdapter.ViewHolder holder;
         final News data = mDataList.get(position);
 
         if (convertView == null) {
-            holder = new ItemDetailNewsAdapter.ViewHolder();
+            holder = new DetailNewsAdapter.ViewHolder();
 
-            convertView = mLayoutInflater.inflate(R.layout.item_detail_news_row, null);
+            convertView = mLayoutInflater.inflate(R.layout.detail_news_row, null);
 
             holder.tvTitle = convertView.findViewById(R.id.tvTitle);
             holder.tvElapsed = convertView.findViewById(R.id.tvElapsed);
@@ -55,7 +55,7 @@ public class ItemDetailNewsAdapter extends BaseDataAdapter {
 
             convertView.setTag(holder);
         } else {
-            holder = (ItemDetailNewsAdapter.ViewHolder) convertView.getTag();
+            holder = (DetailNewsAdapter.ViewHolder) convertView.getTag();
         }
 
         String title = data.getTitle();
